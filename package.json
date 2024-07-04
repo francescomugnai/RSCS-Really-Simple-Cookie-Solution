@@ -1,6 +1,6 @@
 {
   "name": "@mugnai/rscs",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "RSCS - Really Simple Cookie Solution: A lightweight, customizable cookie consent management solution.",
   "author": "Francesco Mugnai",
   "license": "MIT",
