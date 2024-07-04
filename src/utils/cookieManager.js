@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { DEFAULT_BLOCKED_DOMAINS } from './blockedDomains';
 
 const COOKIE_CATEGORIES = {
   necessary: {
@@ -19,15 +20,23 @@ const COOKIE_CATEGORIES = {
   }
 };
 
-const BLOCKED_DOMAINS = [
-  'youtube.com',
-  'google-analytics.com',
-  'googletagmanager.com',
-  'facebook.net',
-  'doubleclick.net',
-  'spotify.com',
-  // Aggiungi altri domini che vuoi bloccare
-];
+let blockedDomains = [...DEFAULT_BLOCKED_DOMAINS];
+
+export const setBlockedDomains = (customDomains) => {
+  if (Array.isArray(customDomains)) {
+    blockedDomains = customDomains;
+  } else {
+    console.warn('setBlockedDomains: customDomains deve essere un array');
+  }
+};
+
+export const useDefaultBlockedDomains = () => {
+  blockedDomains = [...DEFAULT_BLOCKED_DOMAINS];
+};
+
+export const getBlockedDomains = () => {
+  return [...blockedDomains];
+};
 
 export const getCookiePreferences = () => {
   const preferences = Cookies.get('cookiePreferences');
@@ -87,7 +96,7 @@ export const autoBlockResources = () => {
 
   [...scripts, ...iframes].forEach(el => {
     const src = el.src || el.getAttribute('data-src');
-    if (src && BLOCKED_DOMAINS.some(domain => src.includes(domain))) {
+    if (src && blockedDomains.some(domain => src.includes(domain))) {
       el.setAttribute('data-cookie-type', 'marketing');
       if (el.tagName === 'SCRIPT') {
         el.type = 'text/plain';
@@ -102,6 +111,12 @@ export const autoBlockResources = () => {
 export const initializeCookieManager = (config) => {
   const customCookieTypes = config.cookieTypes || {};
   Object.assign(COOKIE_CATEGORIES, customCookieTypes);
+
+  if (config.blockedDomains) {
+    setBlockedDomains(config.blockedDomains);
+  } else if (config.useDefaultBlockedDomains === false) {
+    setBlockedDomains([]);
+  }
 
   if (config.autoBlock) {
     autoBlockResources();

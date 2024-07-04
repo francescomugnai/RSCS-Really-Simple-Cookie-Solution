@@ -1,5 +1,4 @@
 // PreferencesButton.jsx
-import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 import { getCookiePreferences } from '../utils/cookieManager';
 

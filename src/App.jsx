@@ -1,12 +1,11 @@
 // App.jsx
-import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { unblockResources, blockResources } from './utils/cookieManager';
 
 function App() {
   useEffect(() => {
     unblockResources();
-    blockResources(); // Blocca nuovamente le risorse non consentite
+    blockResources(); 
   }, []);
 
   return (

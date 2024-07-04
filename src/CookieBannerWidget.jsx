@@ -1,4 +1,4 @@
-import { h, render } from 'preact';
+import { render } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 import CookieBanner from './components/CookieBanner';
 import './styles/CookieBanner.css';
@@ -14,7 +14,7 @@ const PreferencesButton = ({ onClick, text }) => (
       onClick();
     }}
   >
-    {text || 'Gestisci preferenze cookie'}
+    {text}
   </div>
 );
 
@@ -26,11 +26,10 @@ const CookieBannerWidget = {
       return;
     }
 
-
     const defaultConfig = {
       containerId: 'cookie-banner-container',
-      preferencesButtonId: 'cookie-preferences-button', // Nuovo ID per il pulsante personalizzato
-      language: 'en', // Default language
+      preferencesButtonId: 'cookie-preferences-button',
+      language: 'en',
       preferencesButtonText: 'Gestisci preferenze cookie',
       bannerTitle: 'Impostazioni Cookie',
       bannerDescription: 'Utilizziamo i cookie per migliorare la tua esperienza sul nostro sito.',
@@ -38,10 +37,16 @@ const CookieBannerWidget = {
       acceptAllButtonText: 'Accetta tutti',
       closeButtonText: 'Chiudi',
       scrollTopButton: "Back to Top",
-
-      autoBlock: true, // Default to true
-      logoUrl: "https://www.indire.it/wp-content/uploads/2015/07/logo-indire.png", // Nuovo campo per l'URL del logo
-      logoDarkUrl: "https://www.indire.it/wp-content/uploads/2015/07/logo-indire.png", // Nuovo campo per l'URL del logo
+      useDefaultBlockedDomains: true,
+      blockedDomains: null,
+      autoBlock: true,
+      logoUrl: "https://www.indire.it/wp-content/uploads/2015/07/logo-indire.png",
+      logoDarkUrl: "https://www.indire.it/wp-content/uploads/2015/07/logo-indire.png",
+      googleAnalytics: {
+        enabled: false,
+        id: '',
+        category: 'marketing'
+      },
       cookieTypes: {
         necessary: {
           title: 'Necessari',
@@ -65,76 +70,69 @@ const CookieBannerWidget = {
     const finalConfig = { ...defaultConfig, ...config };
     const container = document.getElementById(finalConfig.containerId);
     
-    if (container) {
-      const lang = finalConfig.language in translations ? finalConfig.language : 'en';
-      const translatedConfig = {
-        ...finalConfig,
-        ...translations[lang],
-        cookieTypes: Object.fromEntries(
-          Object.entries(translations[lang])
-            .filter(([key]) => ['necessary', 'functional', 'analytics', 'marketing'].includes(key))
-        )
-      };
-
-      const initializedConfig = initializeCookieManager({
-        ...translatedConfig,
-        googleAnalytics: finalConfig.googleAnalytics // Assicurati che questa riga sia presente
-      });
-      
-      const WidgetWrapper = () => {
-        const [showBanner, setShowBanner] = useState(false);
-        const [showPreferencesButton, setShowPreferencesButton] = useState(false);
-
-        useEffect(() => {
-          const preferences = getCookiePreferences();
-          if (preferences) {
-            setShowBanner(false);
-            setShowPreferencesButton(true);
-          } else {
-            setShowBanner(true);
-          }
-        }, []);
-
-        const handleTogglePreferences = () => {
-          setShowBanner(true);
-          setShowPreferencesButton(false);
-        };
-
-        const handleCloseBanner = () => {
-          setShowBanner(false);
-          setShowPreferencesButton(true);
-        };
-
-        useEffect(() => {
-          // Cerca un elemento personalizzato per il pulsante delle preferenze
-          const customPreferencesButton = document.getElementById(finalConfig.preferencesButtonId);
-          if (customPreferencesButton) {
-            customPreferencesButton.addEventListener('click', handleTogglePreferences);
-            setShowPreferencesButton(false); // Non mostrare il pulsante predefinito
-          }
-
-          return () => {
-            if (customPreferencesButton) {
-              customPreferencesButton.removeEventListener('click', handleTogglePreferences);
-            }
-          };
-        }, []);
-
-        return (
-          <div>
-            {showBanner && <CookieBanner config={initializedConfig} onClose={handleCloseBanner} />}
-            {showPreferencesButton && !document.getElementById(finalConfig.preferencesButtonId) && 
-              <PreferencesButton onClick={handleTogglePreferences} text={finalConfig.preferencesButtonText} />
-            }
-          </div>
-        );
-      };
-
-      render(<WidgetWrapper />, container);
-      this.initialized = true;
-    } else {
+    if (!container) {
       console.error(`Container con id '${finalConfig.containerId}' non trovato`);
+      return;
     }
+
+    const lang = finalConfig.language in translations ? finalConfig.language : 'en';
+    const translatedConfig = {
+      ...finalConfig,
+      ...translations[lang],
+      cookieTypes: {
+        ...translations[lang].cookieTypes,
+        ...finalConfig.cookieTypes
+      }
+    };
+
+    const initializedConfig = initializeCookieManager(translatedConfig);
+    
+    const WidgetWrapper = () => {
+      const [showBanner, setShowBanner] = useState(false);
+      const [showPreferencesButton, setShowPreferencesButton] = useState(false);
+
+      useEffect(() => {
+        const preferences = getCookiePreferences();
+        setShowBanner(!preferences);
+        setShowPreferencesButton(!!preferences);
+      }, []);
+
+      const handleTogglePreferences = () => {
+        setShowBanner(true);
+        setShowPreferencesButton(false);
+      };
+
+      const handleCloseBanner = () => {
+        setShowBanner(false);
+        setShowPreferencesButton(true);
+      };
+
+      useEffect(() => {
+        const customPreferencesButton = document.getElementById(finalConfig.preferencesButtonId);
+        if (customPreferencesButton) {
+          customPreferencesButton.addEventListener('click', handleTogglePreferences);
+          setShowPreferencesButton(false);
+        }
+
+        return () => {
+          if (customPreferencesButton) {
+            customPreferencesButton.removeEventListener('click', handleTogglePreferences);
+          }
+        };
+      }, []);
+
+      return (
+        <>
+          {showBanner && <CookieBanner config={initializedConfig} onClose={handleCloseBanner} />}
+          {showPreferencesButton && !document.getElementById(finalConfig.preferencesButtonId) && 
+            <PreferencesButton onClick={handleTogglePreferences} text={finalConfig.preferencesButtonText} />
+          }
+        </>
+      );
+    };
+
+    render(<WidgetWrapper />, container);
+    this.initialized = true;
   }
 };
 

@@ -3,14 +3,14 @@ import { render } from 'preact';
 import App from './App';
 import CookieBannerWidget from './CookieBannerWidget';
 
-// Renderizza l'app principale
+// Render the main app
 render(<App />, document.getElementById('app'));
 
-// Inizializza il widget del banner dei cookie
+// Initialize the cookie banner widget
 document.addEventListener('DOMContentLoaded', () => {
   CookieBannerWidget.init({
     containerId: 'cookie-banner-container',
-    language: 'en', // o 'en' per l'inglese
+    language: 'it', 
     preferencesButtonText: 'Custom Preferences Button Text',
     bannerTitle: 'Informativa',
     bannerDescription: `Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per altre finalità come specificato nella cookie policy.
@@ -19,11 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
     acceptAllButtonText: 'Custom Accept All',
     closeButtonText: 'Custom Close',
     googleAnalytics: {
-      enabled: true,
+      enabled: false,
       id: 'G-3CM830HKN7',
-      category: 'marketing' // o 'analytics', a seconda di come vuoi classificarlo
+      category: 'marketing' 
     },
-    autoBlock: true, // Set to true or false as needed
+    autoBlock: true,
     cookieTypes: {
       necessary: {
         title: 'Necessari',

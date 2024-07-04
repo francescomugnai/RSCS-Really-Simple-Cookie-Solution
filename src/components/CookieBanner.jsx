@@ -1,5 +1,4 @@
 // CookieBanner.jsx
-import { h } from 'preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 import { loadGoogleAnalytics, removeGoogleAnalytics } from '../utils/analytics';
 import { 
@@ -27,7 +26,6 @@ const CookieBanner = ({ config = {}, onClose }) => {
       setCookiePreferences(savedPreferences);
       unblockResources();
       
-      // Controlla se i cookie di marketing/analytics sono disattivati
       if (!savedPreferences[config.googleAnalytics.category]) {
         removeGoogleAnalyticsCookies();
       }
@@ -61,7 +59,6 @@ const CookieBanner = ({ config = {}, onClose }) => {
       return cookiesRemoved;
     };
 
-    // Tenta di rimuovere i cookie più volte
     const maxAttempts = 5;
     let attempt = 0;
 
@@ -95,7 +92,6 @@ const CookieBanner = ({ config = {}, onClose }) => {
     saveCookiePreferences(allAccepted);
     unblockResources();
     
-    // Carica Google Analytics se abilitato
     if (config.googleAnalytics && config.googleAnalytics.enabled) {
       loadGoogleAnalytics(config.googleAnalytics.id);
     }
@@ -108,7 +104,7 @@ const CookieBanner = ({ config = {}, onClose }) => {
     unblockResources();
     blockResources();
     
-    // Gestione di Google Analytics
+
     if (config.googleAnalytics && config.googleAnalytics.enabled) {
       if (cookiePreferences[config.googleAnalytics.category]) {
         loadGoogleAnalytics(config.googleAnalytics.id);
