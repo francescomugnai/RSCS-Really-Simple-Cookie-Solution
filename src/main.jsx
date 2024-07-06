@@ -11,15 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     containerId: 'cookie-banner-container',
     language: 'en', 
     preferencesButtonText: 'Custom Preferences Button Text',
-    bannerTitle: 'Informativa',
-    bannerDescription: `Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per altre finalità come specificato nella cookie policy.
-    Usa il pulsante “Accetta” per acconsentire. Usa il pulsante “Rifiuta” o chiudi questa informativa per continuare senza accettare.`,
-    saveButtonText: 'Custom Save Preferences',
-    acceptAllButtonText: 'Custom Accept All',
-    closeButtonText: 'Custom Close',
-    colorMode: 'light',
+    // bannerTitle: 'Informativa',
+    // bannerDescription: `Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per altre finalità come specificato nella cookie policy.
+    // Usa il pulsante “Accetta” per acconsentire. Usa il pulsante “Rifiuta” o chiudi questa informativa per continuare senza accettare.`,
+    // saveButtonText: 'Custom Save Preferences',
+    // acceptAllButtonText: 'Custom Accept All',
+    // closeButtonText: 'Custom Close',
+    colorMode: 'dark',
     placeholders: false,
-    privacyPolicyUrl: 'https://www.example.com/privacy-policy',
+    // privacyPolicyUrl: 'https://www.example.com/privacy-policy',
     autoBlock: true,
     cookieTypes: {
       necessary: {

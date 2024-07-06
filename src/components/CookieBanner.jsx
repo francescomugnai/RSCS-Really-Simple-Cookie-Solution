@@ -18,6 +18,8 @@ const CookieBanner = ({
   onReject,
   onPreferenceChange
 }) => {
+  console.log('CookieBanner config:', config);
+
   const [showDetails, setShowDetails] = useState(initiallyExpanded);
   const [cookiePreferences, setCookiePreferences] = useState({
     necessary: true,
@@ -164,7 +166,7 @@ const CookieBanner = ({
   return (
   <div className={`cookie-banner ${showDetails ? 'show-details' : ''}`}>
       <div className="cookie-banner-content">
-        <button onClick={onClose} className="close-button">{config.closeButton}</button>
+      <button onClick={onClose} className="close-button">{config.closeButtonText}</button>
         
         {(config.logoUrl || config.logoDarkUrl) && (
           <div className="logo-container">
@@ -187,13 +189,13 @@ const CookieBanner = ({
             onClick={handleAcceptAll}
             className="cookie-button accept-button"
           >
-            {config.acceptAllButton}
+            {config.acceptAllButtonText}
           </button>
           <button 
             onClick={handleReject}
             className="cookie-button reject-button"
           >
-            {config.rejectAllButton}
+            {config.rejectAllButtonText || 'Reject All'}
           </button>
         </div>
 
@@ -201,7 +203,7 @@ const CookieBanner = ({
           onClick={toggleDetails}
           className="details-link"
         >
-          {showDetails ? config.hideDetailsLink : config.detailsLink}
+          {showDetails ? (config.hideDetailsLinkText || 'Hide Details') : (config.detailsLinkText || 'Show Details')}
         </button>
 
         <div ref={detailsRef}>
@@ -226,7 +228,7 @@ const CookieBanner = ({
                 onClick={handleSavePreferences}
                 className="cookie-button save-button"
               >
-                {config.savePreferencesButton}
+                {config.saveButtonText}
               </button>
             </div>
           )}

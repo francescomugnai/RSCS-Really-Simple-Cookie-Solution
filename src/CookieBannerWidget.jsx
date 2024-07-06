@@ -42,14 +42,14 @@ const CookieBannerWidget = {
       containerId: 'cookie-banner-container',
       preferencesButtonId: 'cookie-preferences-button',
       language: 'en',
-      preferencesButtonText: 'Gestisci preferenze cookie',
+      preferencesButtonText: 'Manage Cookie Preferences',
       useAnimations: true,
-      bannerTitle: 'Impostazioni Cookie',
-      bannerDescription: 'Utilizziamo i cookie per migliorare la tua esperienza sul nostro sito.',
-      colorMode: 'auto', // 'auto', 'light', o 'dark'
-      saveButtonText: 'Salva preferenze',
-      acceptAllButtonText: 'Accetta tutti',
-      closeButtonText: 'Chiudi',
+      bannerTitle: 'Cookie Settings',
+      bannerDescription: 'We use cookies to improve your experience on our site.',
+      colorMode: 'auto',
+      saveButtonText: 'Save Preferences',
+      acceptAllButtonText: 'Accept All',
+      closeButtonText: 'Close',
       scrollTopButton: "Back to Top",
       useDefaultBlockedDomains: true,
       blockedDomains: null,
@@ -102,18 +102,53 @@ const CookieBannerWidget = {
     const lang = finalConfig.language in translations ? finalConfig.language : 'en';
     console.log(finalConfig )
 
-    const translatedConfig = {
-      ...finalConfig,
-      ...translations[lang],
-      cookieTypes: {
-        ...translations[lang].cookieTypes,
-        ...finalConfig.cookieTypes
-      },
-      placeholdersText: translations[lang].placeholdersText || finalConfig.placeholdersText,
-      privacyPolicyLink: translations[lang].privacyPolicyLink,
-    };
+    let translatedConfig = { ...finalConfig };
+    if (finalConfig.language && finalConfig.language in translations) {
+      const baseTranslations = translations[finalConfig.language];
+      translatedConfig = {
+        ...finalConfig,
+        bannerTitle: finalConfig.bannerTitle || baseTranslations.bannerTitle,
+        bannerDescription: finalConfig.bannerDescription || baseTranslations.bannerDescription,
+        acceptAllButtonText: finalConfig.acceptAllButtonText || baseTranslations.acceptAllButtonText,
+        rejectAllButtonText: finalConfig.rejectAllButtonText || baseTranslations.rejectAllButtonText,
+        saveButtonText: finalConfig.saveButtonText || baseTranslations.saveButtonText,
+        closeButtonText: finalConfig.closeButtonText || baseTranslations.closeButtonText,
+        detailsLinkText: finalConfig.detailsLinkText || baseTranslations.detailsLinkText,
+        hideDetailsLinkText: finalConfig.hideDetailsLinkText || baseTranslations.hideDetailsLinkText,
+        preferencesButtonText: finalConfig.preferencesButtonText || baseTranslations.preferencesButtonText,
+        cookieTypes: {
+          ...baseTranslations.cookieTypes,
+          ...finalConfig.cookieTypes
+        },
+      };
+    } else {
+      const defaultEnglishTranslations = translations['en'];
+      translatedConfig = {
+        ...finalConfig,
+        bannerTitle: finalConfig.bannerTitle || defaultEnglishTranslations.bannerTitle,
+        bannerDescription: finalConfig.bannerDescription || defaultEnglishTranslations.bannerDescription,
+        acceptAllButtonText: finalConfig.acceptAllButtonText || defaultEnglishTranslations.acceptAllButtonText,
+        rejectAllButtonText: finalConfig.rejectAllButtonText || defaultEnglishTranslations.rejectAllButtonText,
+        saveButtonText: finalConfig.saveButtonText || defaultEnglishTranslations.saveButtonText,
+        closeButtonText: finalConfig.closeButtonText || defaultEnglishTranslations.closeButtonText,
+        detailsLinkText: finalConfig.detailsLinkText || defaultEnglishTranslations.detailsLinkText,
+        hideDetailsLinkText: finalConfig.hideDetailsLinkText || defaultEnglishTranslations.hideDetailsLinkText,
+        preferencesButtonText: finalConfig.preferencesButtonText || defaultEnglishTranslations.preferencesButtonText,
+        cookieTypes: {
+          ...defaultEnglishTranslations.cookieTypes,
+          ...finalConfig.cookieTypes
+        },
+      };
+    }
 
-    const initializedConfig = initializeCookieManager(translatedConfig);
+    const initializedConfig = initializeCookieManager({
+      ...translatedConfig,
+      cookieTypes: {
+        ...translatedConfig.cookieTypes,
+        ...finalConfig.cookieTypes
+      }
+    });
+    console.log('Initialized config:', initializedConfig);
     
     const WidgetWrapper = () => {
       const [showBanner, setShowBanner] = useState(false);
@@ -168,7 +203,7 @@ const CookieBannerWidget = {
         <>
           {showBanner && (
             <CookieBanner 
-              config={initializedConfig} 
+              config={translatedConfig}  
               onClose={handleCloseBanner} 
               initiallyExpanded={expandedBanner}
               onAccept={config.onAccept}

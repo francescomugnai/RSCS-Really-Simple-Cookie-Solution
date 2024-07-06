@@ -107,48 +107,26 @@ CookieBannerWidget.init({
 
 | Option                   | Type    | Default                  | Description                                                  |
 |--------------------------|---------|--------------------------|--------------------------------------------------------------|
-| containerId              | string  | 'cookie-banner-container' | ID of the container where the banner will be rendered         |
-| language                 | string  | 'en'                     | Language for the banner text. Supports multi-language configuration. |
+| acceptAllButtonText      | string  | 'Accept All'             | Text for the accept all button in the banner                  |
 | autoBlock                | boolean | true                     | Automatically block known tracking domains                    |
-| logoUrl                  | string  | null                     | URL for the logo to display in the banner                     |
+| bannerDescription        | string  | 'We use cookies to enhance your experience on our site.' | Description text of the cookie banner                         |
+| bannerTitle              | string  | 'Cookie Settings'        | Title of the cookie banner                                   |
+| blockedDomains           | array   | null                     | Custom list of domains to block                              |
+| closeButtonText          | string  | 'Close'                  | Text for the close button in the banner                       |
+| colorMode                | string  | 'auto'                   | Color mode for the banner. Can be 'light', 'dark', or 'auto' |
+| containerId              | string  | 'cookie-banner-container' | ID of the container where the banner will be rendered        |
+| cookieTypes              | object  | See default below        | Define custom cookie categories and their descriptions        |
+| googleAnalytics          | object  | { enabled: false, id: '', category: 'marketing' } | Configuration for Google Analytics integration |
+| language                 | string  | 'en'                     | Language for the banner text. Supports multi-language configuration. |
 | logoDarkUrl              | string  | null                     | URL for the logo to display in dark mode                      |
+| logoUrl                  | string  | null                     | URL for the logo to display in the banner                     |
 | preferencesButtonId      | string  | 'cookie-preferences-button' | ID of the preferences button                                 |
 | preferencesButtonText    | string  | 'Manage Cookie Preferences' | Text for the preferences button                              |
-| bannerTitle              | string  | 'Cookie Settings'        | Title of the cookie banner                                   |
-| bannerDescription        | string  | 'We use cookies to enhance your experience on our site.'    | Description text of the cookie banner                         |
 | saveButtonText           | string  | 'Save Preferences'       | Text for the save button in the banner                       |
-| acceptAllButtonText      | string  | 'Accept All'             | Text for the accept all button in the banner                  |
-| closeButtonText          | string  | 'Close'                  | Text for the close button in the banner                       |
-| googleAnalytics          | object  | { enabled: false, id: '', category: 'marketing' } | Configuration for Google Analytics integration |
-| cookieTypes              | object  | See default below        | Define custom cookie categories and their descriptions        |
 | scrollTopButton          | string  | 'Back to Top'            | Text for the scroll-to-top button                            |
-| useDefaultBlockedDomains | boolean | true                     | Whether to use the default list of blocked domains           |
-| blockedDomains           | array   | null                     | Custom list of domains to block                              |
 | useAnimations            | boolean | true                     | Whether to use animations in the banner                      |
-| colorMode                | string  | 'auto'                   | Color mode for the banner. Can be 'light', 'dark', or 'auto' |
+| useDefaultBlockedDomains | boolean | true                     | Whether to use the default list of blocked domains           |
 
-#### Default cookieTypes Configuration
-
-```js
-cookieTypes: {
-  necessary: {
-    title: 'Necessary',
-    description: 'Essential cookies for the website to function properly.'
-  },
-  functional: {
-    title: 'Functional',
-    description: 'Cookies used to enhance the functionality of the website.'
-  },
-  analytics: {
-    title: 'Analytics',
-    description: 'Cookies used to analyze site usage to improve user experience.'
-  },
-  marketing: {
-    title: 'Marketing',
-    description: 'Cookies used to display personalized ascriptsements.'
-  }
-}
-```
 
 #### Custom Preferences Button 🔘
 
@@ -157,6 +135,33 @@ If you want to provide a custom button to reopen the cookie preferences, you can
 ```html
 <button id="cookie-preferences-button">Manage Cookie Preferences</button>
 ```
+
+#### Language and Translations 🌐
+
+RSCS supports multiple languages through built-in translations. You can specify a language using the `language` option:
+
+```js
+CookieBannerWidget.init({
+  language: 'it',
+  // ... other options ...
+});
+```
+You can also override specific translation strings while still using a base language. This allows for fine-grained customization:
+
+```js
+CookieBannerWidget.init({
+  language: 'en', 
+  preferencesButtonText: 'Custom Preferences Button Text',
+  bannerTitle: 'Custom Banner Title',
+  bannerDescription: 'Custom banner description.',
+  saveButtonText: 'Custom Save Preferences',
+  acceptAllButtonText: 'Custom Accept All',
+  closeButtonText: 'Custom Close',
+  // ... other options ...
+});
+```
+
+In this example, the base language is English, but specific text elements are customized. Any text not explicitly overridden will use the default English translation.
 
 #### Manual Resource Blocking 🛑
 
@@ -179,7 +184,6 @@ You can manually block specific resources by adding the data-cookie-type attribu
 
 In this example, the Spotify embed will only load if the user has accepted marketing cookies.
 
-
 #### Customizing Blocked Domains 🚫
 RSCS comes with a predefined list of domains to block. You can customize this list by setting useDefaultBlockedDomains to false and passing an array of domains to blockedDomains:
 
@@ -193,6 +197,29 @@ CookieBannerWidget.init({
   useDefaultBlockedDomains: false,
   blockedDomains: ['youtube.com', 'facebook.com', 'your-custom-domain.com']
 });
+```
+
+#### Default cookieTypes Configuration
+
+```js
+cookieTypes: {
+  necessary: {
+    title: 'Necessary',
+    description: 'Essential cookies for the website to function properly.'
+  },
+  functional: {
+    title: 'Functional',
+    description: 'Cookies used to enhance the functionality of the website.'
+  },
+  analytics: {
+    title: 'Analytics',
+    description: 'Cookies used to analyze site usage to improve user experience.'
+  },
+  marketing: {
+    title: 'Marketing',
+    description: 'Cookies used to display personalized ascriptsements.'
+  }
+}
 ```
 
 #### Color Mode Configuration 🎨
