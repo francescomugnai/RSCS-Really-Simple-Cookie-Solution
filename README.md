@@ -126,6 +126,7 @@ CookieBannerWidget.init({
 | scrollTopButton          | string  | 'Back to Top'            | Text for the scroll-to-top button                            |
 | useAnimations            | boolean | true                     | Whether to use animations in the banner                      |
 | useDefaultBlockedDomains | boolean | true                     | Whether to use the default list of blocked domains           |
+| position                 | string  | 'bottom-right'           |  Position of the banner. Can be 'bottom-right', 'bottom-left', or 'bottom-center'           |
 
 
 #### Custom Preferences Button 🔘
@@ -205,19 +206,19 @@ CookieBannerWidget.init({
 cookieTypes: {
   necessary: {
     title: 'Necessary',
-    description: 'Essential cookies for the website to function properly.'
+    description: 'Essential cookies for the site to function.'
   },
   functional: {
-    title: 'Functional',
-    description: 'Cookies used to enhance the functionality of the website.'
+    title: 'Functionality',
+    description: 'Cookies to improve site functionality.'
   },
   analytics: {
     title: 'Analytics',
-    description: 'Cookies used to analyze site usage to improve user experience.'
+    description: 'Cookies to analyze site usage.'
   },
   marketing: {
     title: 'Marketing',
-    description: 'Cookies used to display personalized ascriptsements.'
+    description: 'Cookies to show personalized ads.'
   }
 }
 ```

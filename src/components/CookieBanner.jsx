@@ -164,7 +164,7 @@ const CookieBanner = ({
   if (!Object.keys(config.cookieTypes).length) return null;
 
   return (
-  <div className={`cookie-banner ${showDetails ? 'show-details' : ''}`}>
+  <div className={`cookie-banner ${showDetails ? 'show-details' : ''} ${config.position}`}>
       <div className="cookie-banner-content">
       <button onClick={onClose} className="close-button">{config.closeButtonText}</button>
         

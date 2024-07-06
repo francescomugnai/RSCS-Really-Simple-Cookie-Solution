@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     containerId: 'cookie-banner-container',
     language: 'en', 
     preferencesButtonText: 'Custom Preferences Button Text',
+    position: 'bottom-right',
     // bannerTitle: 'Informativa',
     // bannerDescription: `Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per altre finalità come specificato nella cookie policy.
     // Usa il pulsante “Accetta” per acconsentire. Usa il pulsante “Rifiuta” o chiudi questa informativa per continuare senza accettare.`,

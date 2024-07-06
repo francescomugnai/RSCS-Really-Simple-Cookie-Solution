@@ -152,4 +152,10 @@ const translations = {
   }
 };
 
+Object.keys(translations).forEach(lang => {
+  if (!translations[lang].cookieTypes) {
+    translations[lang].cookieTypes = translations.en.cookieTypes;
+  }
+});
+
 export default translations;

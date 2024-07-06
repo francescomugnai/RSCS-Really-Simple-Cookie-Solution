@@ -45,8 +45,8 @@ const CookieBannerWidget = {
       preferencesButtonText: 'Manage Cookie Preferences',
       useAnimations: true,
       bannerTitle: 'Cookie Settings',
-      bannerDescription: 'We use cookies to improve your experience on our site.',
-      colorMode: 'auto',
+      bannerDescription: 'We use cookies to enhance your browsing experience, personalize content and ads, analyze our traffic, and provide social media features. By clicking "Accept All", you consent to our use of cookies. You can manage your preferences by clicking "Manage Cookies".',
+      colorMode: 'auto', // 'auto', 'light', or 'dark'
       saveButtonText: 'Save Preferences',
       acceptAllButtonText: 'Accept All',
       closeButtonText: 'Close',
@@ -56,8 +56,9 @@ const CookieBannerWidget = {
       autoBlock: true,
       logoUrl: null,
       logoDarkUrl: null,
+      position: 'bottom-right', 
       placeholders: true,
-      placeholdersText: 'Questo contenuto è bloccato. Accetta i cookie per visualizzarlo.',
+      placeholdersText: 'This content is blocked. Accept cookies to view it.',
       privacyPolicyUrl: null,
       googleAnalytics: {
         enabled: false,
@@ -66,20 +67,20 @@ const CookieBannerWidget = {
       },
       cookieTypes: {
         necessary: {
-          title: 'Necessari',
-          description: 'Cookie essenziali per il funzionamento del sito.'
+          title: 'Necessary',
+          description: 'Essential cookies for the site to function.'
         },
         functional: {
-          title: 'Funzionalità',
-          description: 'Cookie per migliorare la funzionalità del sito.'
+          title: 'Functionality',
+          description: 'Cookies to improve site functionality.'
         },
         analytics: {
-          title: 'Analitici',
-          description: 'Cookie per analizzare l\'utilizzo del sito.'
+          title: 'Analytics',
+          description: 'Cookies to analyze site usage.'
         },
         marketing: {
           title: 'Marketing',
-          description: 'Cookie per mostrare annunci personalizzati.'
+          description: 'Cookies to show personalized ads.'
         }
       }
     };
@@ -102,6 +103,9 @@ const CookieBannerWidget = {
     const lang = finalConfig.language in translations ? finalConfig.language : 'en';
     console.log(finalConfig )
 
+  
+
+
     let translatedConfig = { ...finalConfig };
     if (finalConfig.language && finalConfig.language in translations) {
       const baseTranslations = translations[finalConfig.language];
@@ -116,30 +120,52 @@ const CookieBannerWidget = {
         detailsLinkText: finalConfig.detailsLinkText || baseTranslations.detailsLinkText,
         hideDetailsLinkText: finalConfig.hideDetailsLinkText || baseTranslations.hideDetailsLinkText,
         preferencesButtonText: finalConfig.preferencesButtonText || baseTranslations.preferencesButtonText,
-        cookieTypes: {
-          ...baseTranslations.cookieTypes,
-          ...finalConfig.cookieTypes
-        },
+        cookieTypes: { ...finalConfig.cookieTypes },
       };
+    
+      if (baseTranslations.cookieTypes) {
+        Object.keys(baseTranslations.cookieTypes).forEach(type => {
+          if (translatedConfig.cookieTypes[type]) {
+            translatedConfig.cookieTypes[type] = {
+              title: finalConfig.cookieTypes[type].title || baseTranslations.cookieTypes[type].title,
+              description: finalConfig.cookieTypes[type].description || baseTranslations.cookieTypes[type].description
+            };
+          } else {
+            translatedConfig.cookieTypes[type] = baseTranslations.cookieTypes[type];
+          }
+        });
+      }
     } else {
       const defaultEnglishTranslations = translations['en'];
       translatedConfig = {
         ...finalConfig,
-        bannerTitle: finalConfig.bannerTitle || defaultEnglishTranslations.bannerTitle,
-        bannerDescription: finalConfig.bannerDescription || defaultEnglishTranslations.bannerDescription,
-        acceptAllButtonText: finalConfig.acceptAllButtonText || defaultEnglishTranslations.acceptAllButtonText,
-        rejectAllButtonText: finalConfig.rejectAllButtonText || defaultEnglishTranslations.rejectAllButtonText,
-        saveButtonText: finalConfig.saveButtonText || defaultEnglishTranslations.saveButtonText,
-        closeButtonText: finalConfig.closeButtonText || defaultEnglishTranslations.closeButtonText,
-        detailsLinkText: finalConfig.detailsLinkText || defaultEnglishTranslations.detailsLinkText,
-        hideDetailsLinkText: finalConfig.hideDetailsLinkText || defaultEnglishTranslations.hideDetailsLinkText,
-        preferencesButtonText: finalConfig.preferencesButtonText || defaultEnglishTranslations.preferencesButtonText,
-        cookieTypes: {
-          ...defaultEnglishTranslations.cookieTypes,
-          ...finalConfig.cookieTypes
-        },
+        bannerTitle: defaultEnglishTranslations.bannerTitle || finalConfig.bannerTitle,
+        bannerDescription: defaultEnglishTranslations.bannerDescription || finalConfig.bannerDescription,
+        acceptAllButtonText: defaultEnglishTranslations.acceptAllButtonText || finalConfig.acceptAllButtonText,
+        rejectAllButtonText: defaultEnglishTranslations.rejectAllButtonText || finalConfig.rejectAllButtonText,
+        saveButtonText: defaultEnglishTranslations.saveButtonText || finalConfig.saveButtonText,
+        closeButtonText: defaultEnglishTranslations.closeButtonText || finalConfig.closeButtonText,
+        detailsLinkText: defaultEnglishTranslations.detailsLinkText || finalConfig.detailsLinkText,
+        hideDetailsLinkText: defaultEnglishTranslations.hideDetailsLinkText || finalConfig.hideDetailsLinkText,
+        preferencesButtonText: defaultEnglishTranslations.preferencesButtonText || finalConfig.preferencesButtonText,
+        cookieTypes: { ...finalConfig.cookieTypes },
       };
+    
+      if (defaultEnglishTranslations.cookieTypes) {
+        Object.keys(defaultEnglishTranslations.cookieTypes).forEach(type => {
+          if (translatedConfig.cookieTypes[type]) {
+            translatedConfig.cookieTypes[type] = {
+              ...defaultEnglishTranslations.cookieTypes[type],
+              ...translatedConfig.cookieTypes[type]
+            };
+          } else {
+            translatedConfig.cookieTypes[type] = defaultEnglishTranslations.cookieTypes[type];
+          }
+        });
+      }
     }
+    
+    console.log('Translated config:', translatedConfig);
 
     const initializedConfig = initializeCookieManager({
       ...translatedConfig,
