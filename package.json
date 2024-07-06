@@ -1,0 +1,55 @@
+{
+  "name": "@mugnai/rscs",
+  "version": "0.2.0",
+  "description": "RSCS - Really Simple Cookie Solution: A lightweight, customizable cookie consent management solution.",
+  "author": "Francesco Mugnai",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/francescomugnai/rscs.git"
+  },
+  "homepage": "https://github.com/francescomugnai/rscs#readme",
+  "bugs": {
+    "url": "https://github.com/francescomugnai/rscs/issues"
+  },
+  "keywords": [
+    "cookie",
+    "consent",
+    "gdpr",
+    "privacy",
+    "banner"
+  ],
+  "type": "module",
+  "main": "./dist/cookie-banner-widget.umd.js",
+  "module": "./dist/cookie-banner-widget.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/cookie-banner-widget.es.js",
+      "require": "./dist/cookie-banner-widget.umd.js"
+    },
+    "./style.css": "./dist/cookie-banner-style.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && terser dist/cookie-banner-widget.umd.js -o dist/cookie-banner-widget.umd.min.js",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
+    "js-cookie": "^3.0.5",
+    "preact": "^10.22.1"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.8.3",
+    "@vitejs/plugin-react": "^4.3.1",
+    "terser": "^5.31.1",
+    "vite": "^5.3.3",
+    "vite-plugin-css-injected-by-js": "^3.5.1"
+  },
+  "peerDependencies": {
+    "preact": "^10.0.0"
+  }
+}

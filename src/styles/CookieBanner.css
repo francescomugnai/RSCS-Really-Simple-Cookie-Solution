@@ -1,0 +1,351 @@
+@import url('https://fonts.bunny.net/css?family=inter:400,500,600');
+
+:root {
+  --color-background: #ffffff;
+  --color-text: #1a202c;
+  --color-text-secondary: #4a5568;
+  --color-primary: #4299e1;
+  --color-primary-hover: #3182ce;
+  --color-secondary: #e2e8f0;
+  --color-secondary-hover: #cbd5e0;
+  --color-success: #48bb78;
+  --color-success-hover: #38a169;
+  --color-border: #e2e8f0;
+  --color-close: #a0aec0;
+  --color-close-hover: #4a5568;
+  --shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #2d3748;
+    --color-text: #e2e8f0;
+    --color-text-secondary: #a0aec0;
+    --color-secondary: #4a5568;
+    --color-secondary-hover: #718096;
+    --color-border: #4a5568;
+    --color-close: #718096;
+    --color-close-hover: #e2e8f0;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 380px;
+  max-width: calc(100vw - 40px);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  padding: 24px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  font-family: 'Inter', sans-serif;
+  border-radius: 8px;
+  z-index: 10000;
+  transition: all 0.3s ease;
+  animation: slideIn 0.3s ease-out;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cookie-banner h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.2em;
+  color: var(--color-text);
+  font-weight: 600;
+  padding-right: 24px;
+}
+
+.cookie-banner p {
+  margin-bottom: 20px;
+  color: var(--color-text-secondary);
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.close-button {
+  position: absolute;
+  top: 6px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--color-close);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: var(--color-close-hover);
+}
+
+.cookie-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cookie-button {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.accept-button {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.accept-button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.reject-button {
+  background-color: var(--color-secondary);
+  color: var(--color-text-secondary);
+}
+
+.reject-button:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+.details-link {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  font-size: 0.9em;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 8px;
+  transition: color 0.2s ease;
+}
+
+.details-link:hover {
+  color: var(--color-primary-hover);
+}
+
+.cookie-options {
+  margin-top: 20px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 20px;
+}
+
+.cookie-option {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.cookie-option input[type="checkbox"] {
+  margin-right: 12px;
+  margin-top: 4px;
+}
+
+.cookie-option label {
+  font-weight: 500;
+  color: var(--color-text);
+  font-size: 0.95em;
+}
+
+.cookie-option p {
+  margin: 4px 0 0;
+  font-size: 0.85em;
+  color: var(--color-text-secondary);
+}
+
+.save-button {
+  width: 100%;
+  background-color: var(--color-success);
+  color: white;
+  margin-top: 16px;
+}
+
+.save-button:hover {
+  background-color: var(--color-success-hover);
+}
+
+.preferences-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--color-primary);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 10001;
+  font-size: 0.85em;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(66, 153, 225, 0.3);
+}
+
+.preferences-button:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(66, 153, 225, 0.4);
+}
+
+.logo-container {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.banner-logo {
+  max-width: 100px;
+  max-height: 40px;
+  object-fit: contain;
+}
+
+.scroll-top-button {
+  position: sticky;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.scroll-top-button:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.blocked-content-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-secondary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow: hidden;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.blocked-content-placeholder::before {
+  content: attr(data-placeholder-text);
+  max-width: 80%;
+}
+
+.privacy-policy-link {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.privacy-policy-link a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.privacy-policy-link a:hover {
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .light-logo {
+    display: none;
+  }
+  
+  .dark-logo {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 480px) {
+  .cookie-banner {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    max-height: 100vh;
+  }
+
+  .cookie-buttons {
+    flex-direction: column;
+  }
+  
+  .cookie-button {
+    width: 100%;
+  }
+  
+  .preferences-button {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .cookie-options {
+    padding-bottom: 60px; 
+  }
+}
+
+.cookie-banner-content {
+  position: relative;
+}
+
+.cookie-banner.show-details {
+  max-height: 80vh;
+}
+
+.force-light {
+  --color-background: #ffffff !important;
+  --color-text: #1a202c !important;
+  --color-text-secondary: #4a5568 !important;
+  --color-primary: #4299e1 !important;
+  --color-primary-hover: #3182ce !important;
+  --color-secondary: #e2e8f0 !important;
+  --color-secondary-hover: #cbd5e0 !important;
+  --color-success: #48bb78 !important;
+  --color-success-hover: #38a169 !important;
+  --color-border: #e2e8f0 !important;
+  --color-close: #a0aec0 !important;
+  --color-close-hover: #4a5568 !important;
+  --shadow-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+.force-dark {
+  --color-background: #2d3748 !important;
+  --color-text: #e2e8f0 !important;
+  --color-text-secondary: #a0aec0 !important;
+  --color-secondary: #4a5568 !important;
+  --color-secondary-hover: #718096 !important;
+  --color-border: #4a5568 !important;
+  --color-close: #718096 !important;
+  --color-close-hover: #e2e8f0 !important;
+  --shadow-color: rgba(0, 0, 0, 0.3) !important;
+}
