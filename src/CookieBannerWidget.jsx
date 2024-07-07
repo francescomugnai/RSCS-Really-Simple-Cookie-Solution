@@ -39,7 +39,7 @@ const CookieBannerWidget = {
     }
     
     const defaultConfig = {
-      containerId: 'cookie-banner-container',
+      containerId: 'cookie-banner-container-' + Math.random().toString(36).substr(2, 9),
       preferencesButtonId: 'cookie-preferences-button',
       language: 'en',
       preferencesButtonText: 'Manage Cookie Preferences',
@@ -93,7 +93,12 @@ const CookieBannerWidget = {
       onPreferenceChange: finalConfig.onPreferenceChange || (() => {})
     };
 
-    const container = document.getElementById(finalConfig.containerId);
+    let container = document.getElementById(finalConfig.containerId);
+    if (!container) {
+      container = document.createElement('div');
+      container.id = finalConfig.containerId;
+      document.body.appendChild(container);
+    }
     
     if (!container) {
       console.error(`Container con id '${finalConfig.containerId}' non trovato`);

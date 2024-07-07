@@ -35,7 +35,6 @@ import CookieBannerWidget from 'rscs';
 
 ```js
 CookieBannerWidget.init({
-  containerId: 'cookie-banner-container',
   language: 'en',
   autoBlock: true,
 });
@@ -49,7 +48,6 @@ Here's an example of a more comprehensive configuration using many of the availa
 import CookieBannerWidget from 'rscs';
 
 CookieBannerWidget.init({
-  containerId: 'cookie-banner-container',
   language: 'en',
   colorMode: 'auto',
   preferencesButtonId: 'custom-preferences-button',
@@ -116,7 +114,6 @@ CookieBannerWidget.init({
 | blockedDomains           | array   | null                     | Custom list of domains to block                              |
 | closeButtonText          | string  | 'Close'                  | Text for the close button in the banner                       |
 | colorMode                | string  | 'auto'                   | Color mode for the banner. Can be 'light', 'dark', or 'auto' |
-| containerId              | string  | 'cookie-banner-container' | ID of the container where the banner will be rendered        |
 | cookieTypes              | object  | See default below        | Define custom cookie categories and their descriptions        |
 | googleAnalytics          | object  | { enabled: false, id: '', category: 'marketing' } | Configuration for Google Analytics integration |
 | language                 | string  | 'en'                     | Language for the banner text. Supports multi-language configuration. |

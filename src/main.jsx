@@ -8,7 +8,6 @@ render(<App />, document.getElementById('app'));
 // Initialize the cookie banner widget
 document.addEventListener('DOMContentLoaded', () => {
   CookieBannerWidget.init({
-    containerId: 'cookie-banner-container',
     language: 'en', 
     preferencesButtonText: 'Custom Preferences Button Text',
     position: 'bottom-right',
