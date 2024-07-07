@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/preact';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import CookieBannerWidget from '../src/CookieBannerWidget';
 import * as cookieManager from '../src/utils/cookieManager';
-// import userEvent from '@testing-library/user-event'
+import userEvent from '@testing-library/user-event'
 
 describe('CookieBannerWidget', () => {
   beforeEach(() => {
@@ -87,33 +87,40 @@ describe('CookieBannerWidget', () => {
 
   it('should show preferences button when preferences are set', async () => {
     vi.spyOn(cookieManager, 'getCookiePreferences').mockReturnValue({ necessary: true });
-
+  
     CookieBannerWidget.init({
       containerId: 'cookie-banner-container',
       language: 'en',
     });
-
+  
     await waitFor(() => {
-      const preferencesButton = screen.getByText('Manage Cookie Preferences');
+      const preferencesButton = document.querySelector('.preferences-button');
       expect(preferencesButton).toBeInTheDocument();
+      
+      expect(preferencesButton.tagName.toLowerCase()).toBe('div');
+      expect(preferencesButton.textContent.trim()).toBe('');
+      
+      const style = window.getComputedStyle(preferencesButton);
+      expect(style.width).toBe(style.height);
     });
   });
 
   it('should open banner when preferences button is clicked', async () => {
     vi.spyOn(cookieManager, 'getCookiePreferences').mockReturnValue({ necessary: true });
-
+  
     CookieBannerWidget.init({
       containerId: 'cookie-banner-container',
       language: 'en',
     });
-
+  
     await waitFor(() => {
-      const preferencesButton = screen.getByText('Manage Cookie Preferences');
+      const preferencesButton = document.querySelector('.preferences-button');
       expect(preferencesButton).toBeInTheDocument();
     });
-
-    fireEvent.click(screen.getByText('Manage Cookie Preferences'));
-
+  
+    const preferencesButton = document.querySelector('.preferences-button');
+    fireEvent.click(preferencesButton);
+  
     await waitFor(() => {
       const bannerTitle = screen.getByText('Cookie Settings');
       expect(bannerTitle).toBeInTheDocument();
@@ -126,8 +133,6 @@ describe('CookieBannerWidget', () => {
       containerId: 'cookie-banner-container',
       language: 'en',
     });
-
-    // const user = userEvent.setup()
 
     await waitFor(() => {
       const banner = screen.getByTestId('cookie-banner');

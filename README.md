@@ -51,7 +51,6 @@ CDN:
             if (window.CookieBannerWidget) {
                 window.CookieBannerWidget.init({
                     language: 'it', 
-                    preferencesButtonText: 'Preferenze Cookie',
                 });
             } 
         });
@@ -69,7 +68,6 @@ CookieBannerWidget.init({
   language: 'en',
   colorMode: 'auto',
   preferencesButtonId: 'custom-preferences-button',
-  preferencesButtonText: 'Manage Cookies',
   bannerTitle: 'Privacy Settings',
   bannerDescription: 'We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.',
   saveButtonText: 'Save Settings',
@@ -139,12 +137,12 @@ CookieBannerWidget.init({
 | logoDarkUrl              | string  | null                     | URL for the logo to display in dark mode                      |
 | logoUrl                  | string  | null                     | URL for the logo to display in the banner                     |
 | preferencesButtonId      | string  | 'cookie-preferences-button' | ID of the preferences button                                 |
-| preferencesButtonText    | string  | 'Manage Cookie Preferences' | Text for the preferences button                              |
 | saveButtonText           | string  | 'Save Preferences'       | Text for the save button in the banner                       |
 | scrollTopButton          | string  | 'Back to Top'            | Text for the scroll-to-top button                            |
 | useAnimations            | boolean | true                     | Whether to use animations in the banner                      |
 | useDefaultBlockedDomains | boolean | true                     | Whether to use the default list of blocked domains           |
-| position                 | string  | 'bottom-right'           |  Position of the banner. Can be 'bottom-right', 'bottom-left', or 'bottom-center'           |
+| position                 | string  | 'bottom-right'           | Position of the banner. Can be 'bottom-right', 'bottom-left', or 'bottom-center'           |
+| showPreferencesButton    | boolean | true                     | If false, the preferences button will not be shown           |
 
 
 #### Custom Preferences Button 🔘
@@ -170,7 +168,6 @@ You can also override specific translation strings while still using a base lang
 ```js
 CookieBannerWidget.init({
   language: 'en', 
-  preferencesButtonText: 'Custom Preferences Button Text',
   bannerTitle: 'Custom Banner Title',
   bannerDescription: 'Custom banner description.',
   saveButtonText: 'Custom Save Preferences',

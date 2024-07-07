@@ -42,7 +42,6 @@ const CookieBannerWidget = {
       containerId: 'cookie-banner-container-' + Math.random().toString(36).substr(2, 9),
       preferencesButtonId: 'cookie-preferences-button',
       language: 'en',
-      preferencesButtonText: 'Manage Cookie Preferences',
       useAnimations: true,
       bannerTitle: 'Cookie Settings',
       bannerDescription: 'We use cookies to enhance your browsing experience, personalize content and ads, analyze our traffic, and provide social media features. By clicking "Accept All", you consent to our use of cookies. You can manage your preferences by clicking "Manage Cookies".',
@@ -58,9 +57,10 @@ const CookieBannerWidget = {
       logoUrl: null,
       logoDarkUrl: null,
       position: 'bottom-right', 
-      placeholders: true,
+      placeholders: false,
       placeholdersText: 'This content is blocked. Accept cookies to view it.',
       privacyPolicyUrl: null,
+      showPreferencesButton: true,
       googleAnalytics: {
         enabled: false,
         id: '',
@@ -121,7 +121,6 @@ const CookieBannerWidget = {
         closeButtonText: finalConfig.closeButtonText || baseTranslations.closeButtonText,
         detailsLinkText: finalConfig.detailsLinkText || baseTranslations.detailsLinkText,
         hideDetailsLinkText: finalConfig.hideDetailsLinkText || baseTranslations.hideDetailsLinkText,
-        preferencesButtonText: finalConfig.preferencesButtonText || baseTranslations.preferencesButtonText,
         cookieTypes: { ...finalConfig.cookieTypes },
       };
     
@@ -149,7 +148,6 @@ const CookieBannerWidget = {
         closeButtonText: defaultEnglishTranslations.closeButtonText || finalConfig.closeButtonText,
         detailsLinkText: defaultEnglishTranslations.detailsLinkText || finalConfig.detailsLinkText,
         hideDetailsLinkText: defaultEnglishTranslations.hideDetailsLinkText || finalConfig.hideDetailsLinkText,
-        preferencesButtonText: defaultEnglishTranslations.preferencesButtonText || finalConfig.preferencesButtonText,
         cookieTypes: { ...finalConfig.cookieTypes },
       };
     
@@ -179,11 +177,11 @@ const CookieBannerWidget = {
       const [showBanner, setShowBanner] = useState(false);
       const [showPreferencesButton, setShowPreferencesButton] = useState(false);
       const [expandedBanner, setExpandedBanner] = useState(finalConfig.initiallyExpanded);
-    
+
       useEffect(() => {
         const preferences = getCookiePreferences();
-        setShowBanner(!preferences || finalConfig.initiallyExpanded);
-        setShowPreferencesButton(!!preferences && !finalConfig.initiallyExpanded);
+        setShowBanner(!preferences);
+        setShowPreferencesButton(!!preferences && finalConfig.showPreferencesButton);
       }, []);
 
       useEffect(() => {
@@ -236,7 +234,7 @@ const CookieBannerWidget = {
               onPreferenceChange={config.onPreferenceChange}
             />
           )}
-          {showPreferencesButton && !document.getElementById(finalConfig.preferencesButtonId) && 
+          {showPreferencesButton && finalConfig.showPreferencesButton && !document.getElementById(finalConfig.preferencesButtonId) && 
             <PreferencesButton onClick={handleTogglePreferences} text={finalConfig.preferencesButtonText} />
           }
         </>

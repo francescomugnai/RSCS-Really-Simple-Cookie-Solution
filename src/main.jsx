@@ -9,7 +9,6 @@ render(<App />, document.getElementById('app'));
 document.addEventListener('DOMContentLoaded', () => {
   CookieBannerWidget.init({
     language: 'en', 
-    preferencesButtonText: 'Custom Preferences Button Text',
     position: 'bottom-right',
     // bannerTitle: 'Informativa',
     // bannerDescription: `Noi e terze parti selezionate utilizziamo cookie o tecnologie simili per finalità tecniche e, con il tuo consenso, anche per altre finalità come specificato nella cookie policy.

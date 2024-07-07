@@ -19,8 +19,8 @@ const PreferencesButton = ({ onTogglePreferences }) => {
         e.preventDefault();
         onTogglePreferences();
       }}
+      aria-label="Manage Cookie Preferences"
     >
-      Gestisci preferenze cookie
     </div>
   );
 };
