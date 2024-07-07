@@ -101,10 +101,6 @@ const CookieBannerWidget = {
     }
     
     const lang = finalConfig.language in translations ? finalConfig.language : 'en';
-    console.log(finalConfig )
-
-  
-
 
     let translatedConfig = { ...finalConfig };
     if (finalConfig.language && finalConfig.language in translations) {
@@ -165,8 +161,6 @@ const CookieBannerWidget = {
       }
     }
     
-    console.log('Translated config:', translatedConfig);
-
     const initializedConfig = initializeCookieManager({
       ...translatedConfig,
       cookieTypes: {
@@ -174,7 +168,6 @@ const CookieBannerWidget = {
         ...finalConfig.cookieTypes
       }
     });
-    console.log('Initialized config:', initializedConfig);
     
     const WidgetWrapper = () => {
       const [showBanner, setShowBanner] = useState(false);
@@ -246,8 +239,6 @@ const CookieBannerWidget = {
 
     render(<WidgetWrapper />, container);
     this.initialized = true;
-
-
   },
   setBlockedDomains,
   useDefaultBlockedDomains,
@@ -260,7 +251,15 @@ const CookieBannerWidget = {
     if (this.callbacks[type]) {
       this.callbacks[type](data);
     }
-  }
+  },
+  reset() {
+    this.initialized = false;
+    this.callbacks = {};
+    const container = document.getElementById('cookie-banner-container');
+    if (container) {
+      container.innerHTML = '';
+    }
+  },
 };
 
 

@@ -18,8 +18,6 @@ const CookieBanner = ({
   onReject,
   onPreferenceChange
 }) => {
-  console.log('CookieBanner config:', config);
-
   const [showDetails, setShowDetails] = useState(initiallyExpanded);
   const [cookiePreferences, setCookiePreferences] = useState({
     necessary: true,
@@ -64,9 +62,7 @@ const CookieBanner = ({
       allCookies.forEach(cookie => {
         const [name, _] = cookie.split('=').map(c => c.trim());
         
-        if (name.startsWith('_ga')) {
-          console.log('Removing Google Analytics cookie:', name);
-          
+        if (name.startsWith('_ga')) {          
           const domains = [window.location.hostname, '.' + window.location.hostname, ''];
           const paths = ['/', '', window.location.pathname];
           
@@ -161,10 +157,14 @@ const CookieBanner = ({
     }, 500);
   };
 
+  useEffect(() => {
+    console.log('showDetails:', showDetails);
+  }, [showDetails]);
+
   if (!Object.keys(config.cookieTypes).length) return null;
 
   return (
-  <div className={`cookie-banner ${showDetails ? 'show-details' : ''} ${config.position}`}>
+    <div className={`cookie-banner ${showDetails ? 'show-details' : ''} ${config.position}`} data-testid="cookie-banner">
       <div className="cookie-banner-content">
       <button onClick={onClose} className="close-button">{config.closeButtonText}</button>
         
@@ -188,12 +188,14 @@ const CookieBanner = ({
           <button 
             onClick={handleAcceptAll}
             className="cookie-button accept-button"
+            data-testid="accept-button"
           >
             {config.acceptAllButtonText}
           </button>
           <button 
             onClick={handleReject}
             className="cookie-button reject-button"
+            data-testid="reject-button"
           >
             {config.rejectAllButtonText || 'Reject All'}
           </button>
@@ -208,7 +210,7 @@ const CookieBanner = ({
 
         <div ref={detailsRef}>
           {showDetails && (
-            <div className="cookie-options">
+            <div className="cookie-options" data-testid="cookie-options">
               {Object.entries(config.cookieTypes).map(([type, { title, description }]) => (
                 <div key={type} className="cookie-option">
                   <input

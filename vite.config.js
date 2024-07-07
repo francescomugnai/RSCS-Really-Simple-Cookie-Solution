@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import preact from '@preact/preset-vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
+import { defineConfig as defineTestConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [
@@ -33,7 +34,12 @@ export default defineConfig({
   },
   server: {
     watch: {
-        usePolling: true
+      usePolling: true
     }
-}
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './test/setup.js',
+  }
 });
