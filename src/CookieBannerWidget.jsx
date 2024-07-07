@@ -262,8 +262,6 @@ const CookieBannerWidget = {
   },
 };
 
-
-
 if (typeof window !== 'undefined') {
   window.CookieBannerWidget = CookieBannerWidget;
 }

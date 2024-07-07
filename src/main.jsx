@@ -22,24 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     placeholders: false,
     // privacyPolicyUrl: 'https://www.example.com/privacy-policy',
     autoBlock: true,
-    cookieTypes: {
-      necessary: {
-        title: 'Necessari',
-        description: 'Custom Description for Necessary Cookies'
-      },
-      functional: {
-        title: 'Funzionalità',
-        description: 'Custom Description for Functional Cookies'
-      },
-      analytics: {
-        title: 'Analitici',
-        description: 'Custom Description for Analytical Cookies'
-      },
-      marketing: {
-        title: 'Marketing',
-        description: 'Custom Description for Marketing Cookies'
-      }
-    },
     onAccept: (preferences) => {
       console.log('Cookies accepted:', preferences);
     },

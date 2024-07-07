@@ -3,6 +3,8 @@
 RSCS is a lightweight, easy-to-use cookie consent management solution for your web projects. 
 It's designed to be flexible, customizable, and compliant with GDPR and other cookie regulations.
 
+![RSCS Screenshot](./images/rscs.jpg)
+
 #### Features 🚀
 
 - 🎨 Customizable banner and preference UI
