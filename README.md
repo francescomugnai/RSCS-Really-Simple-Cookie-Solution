@@ -200,8 +200,9 @@ You can manually block specific resources by adding the data-cookie-type attribu
 ```
 
 In this example, the Spotify embed will only load if the user has accepted marketing cookies.
+When you add a title attribute to an HTML element with a data-cookie-type, the title will be displayed in the cookie banner under the relevant cookie category. This helps users understand which specific resources are being blocked and why. For instance, if you use the above iframe example, "Spotify video player" will be listed under the "Marketing" cookies category in the banner.
 
-Note: While this method is generally effective, it may not work in all cases due to the way some third-party resources are loaded. However, it's still worth trying as it can provide a good level of control in many situations. 
+**Note**: While this method is generally effective, it may not work in all cases due to the way some third-party resources are loaded. However, it's still worth trying as it can provide a good level of control in many situations. 
 For more reliable blocking of specific domains, consider using the blockedDomains configuration option.
 
 #### Customizing Blocked Domains 🚫
