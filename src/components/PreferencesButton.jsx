@@ -1,8 +1,7 @@
-// PreferencesButton.jsx
 import { useState, useEffect } from 'preact/hooks';
 import { getCookiePreferences } from '../utils/cookieManager';
 
-const PreferencesButton = ({ onTogglePreferences }) => {
+const PreferencesButton = ({ onClick, color }) => {
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
@@ -12,14 +11,19 @@ const PreferencesButton = ({ onTogglePreferences }) => {
 
   if (!showButton) return null;
 
+  const buttonStyle = {
+    backgroundColor: color,
+  };
+
   return (
-    <div 
+    <div
       className="preferences-button"
+      style={buttonStyle}
       onClick={(e) => {
         e.preventDefault();
-        onTogglePreferences();
+        e.stopPropagation();
+        onClick();
       }}
-      aria-label="Manage Cookie Preferences"
     >
     </div>
   );

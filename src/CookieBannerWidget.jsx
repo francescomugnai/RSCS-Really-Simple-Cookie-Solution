@@ -14,19 +14,7 @@ import {
   setCookiePreferences,
 } from './utils/cookieManager';
 import translations from './locales/translation';
-
-const PreferencesButton = ({ onClick, text }) => (
-  <div 
-    className="preferences-button"
-    onClick={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      onClick();
-    }}
-  >
-    {text}
-  </div>
-);
+import PreferencesButton from './components/PreferencesButton';
 
 const CookieBannerWidget = {
   initialized: false,
@@ -45,7 +33,7 @@ const CookieBannerWidget = {
       useAnimations: true,
       bannerTitle: 'Cookie Settings',
       bannerDescription: 'We use cookies to enhance your browsing experience, personalize content and ads, analyze our traffic, and provide social media features. By clicking "Accept All", you consent to our use of cookies. You can manage your preferences by clicking "Manage Cookies".',
-      colorMode: 'auto', // 'auto', 'light', or 'dark'
+      colorMode: 'auto', 
       saveButtonText: 'Save Preferences',
       acceptAllButtonText: 'Accept All',
       closeButtonText: 'Close',
@@ -59,6 +47,7 @@ const CookieBannerWidget = {
       position: 'bottom-right', 
       placeholders: false,
       placeholdersText: 'This content is blocked. Accept cookies to view it.',
+      preferencesButtonColor: '#4299e1', 
       privacyPolicyUrl: null,
       showPreferencesButton: true,
       googleAnalytics: {
@@ -201,7 +190,7 @@ const CookieBannerWidget = {
         setShowPreferencesButton(false);
         setExpandedBanner(true);
       };
-
+    
       const handleCloseBanner = () => {
         setShowBanner(false);
         setShowPreferencesButton(true);
@@ -214,7 +203,7 @@ const CookieBannerWidget = {
           customPreferencesButton.addEventListener('click', handleTogglePreferences);
           setShowPreferencesButton(false);
         }
-
+    
         return () => {
           if (customPreferencesButton) {
             customPreferencesButton.removeEventListener('click', handleTogglePreferences);
@@ -234,8 +223,11 @@ const CookieBannerWidget = {
               onPreferenceChange={config.onPreferenceChange}
             />
           )}
-          {showPreferencesButton && finalConfig.showPreferencesButton && !document.getElementById(finalConfig.preferencesButtonId) && 
-            <PreferencesButton onClick={handleTogglePreferences} text={finalConfig.preferencesButtonText} />
+          {showPreferencesButton && !document.getElementById(finalConfig.preferencesButtonId) && 
+            <PreferencesButton 
+              onClick={handleTogglePreferences} 
+              color={finalConfig.preferencesButtonColor}
+            />
           }
         </>
       );

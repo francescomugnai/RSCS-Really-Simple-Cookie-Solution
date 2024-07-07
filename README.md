@@ -142,6 +142,7 @@ CookieBannerWidget.init({
 | useAnimations            | boolean | true                     | Whether to use animations in the banner                      |
 | useDefaultBlockedDomains | boolean | true                     | Whether to use the default list of blocked domains           |
 | position                 | string  | 'bottom-right'           | Position of the banner. Can be 'bottom-right', 'bottom-left', or 'bottom-center'           |
+| preferencesButtonColor   | string  | '#4299e1'                | Color of the preferences button                             |
 | showPreferencesButton    | boolean | true                     | If false, the preferences button will not be shown           |
 
 

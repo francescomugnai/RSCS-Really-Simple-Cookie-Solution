@@ -260,4 +260,21 @@ describe('CookieBannerWidget', () => {
     expect(customCookieDescription).toBeInTheDocument();
   }, { timeout: 5000 });
 
+  it('should apply custom color to preferences button', async () => {
+    vi.spyOn(cookieManager, 'getCookiePreferences').mockReturnValue({ necessary: true });
+  
+    const customColor = 'rgb(255, 87, 51)';
+    CookieBannerWidget.init({
+      language: 'en',
+      preferencesButtonColor: customColor,
+    });
+  
+    await waitFor(() => {
+      const preferencesButton = document.querySelector('.preferences-button');
+      expect(preferencesButton).toBeInTheDocument();
+      expect(preferencesButton.style.backgroundColor).toBe(customColor);
+    });
+  });
+  
+
 });
