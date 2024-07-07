@@ -51,6 +51,7 @@ const CookieBannerWidget = {
       acceptAllButtonText: 'Accept All',
       closeButtonText: 'Close',
       scrollTopButton: "Back to Top",
+      initiallyExpanded: false,
       useDefaultBlockedDomains: true,
       blockedDomains: null,
       autoBlock: true,
@@ -177,12 +178,12 @@ const CookieBannerWidget = {
     const WidgetWrapper = () => {
       const [showBanner, setShowBanner] = useState(false);
       const [showPreferencesButton, setShowPreferencesButton] = useState(false);
-      const [expandedBanner, setExpandedBanner] = useState(false);
-
+      const [expandedBanner, setExpandedBanner] = useState(finalConfig.initiallyExpanded);
+    
       useEffect(() => {
         const preferences = getCookiePreferences();
-        setShowBanner(!preferences);
-        setShowPreferencesButton(!!preferences);
+        setShowBanner(!preferences || finalConfig.initiallyExpanded);
+        setShowPreferencesButton(!!preferences && !finalConfig.initiallyExpanded);
       }, []);
 
       useEffect(() => {

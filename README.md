@@ -134,6 +134,7 @@ CookieBannerWidget.init({
 | colorMode                | string  | 'auto'                   | Color mode for the banner. Can be 'light', 'dark', or 'auto' |
 | cookieTypes              | object  | See default below        | Define custom cookie categories and their descriptions        |
 | googleAnalytics          | object  | { enabled: false, id: '', category: 'marketing' } | Configuration for Google Analytics integration |
+| initiallyExpanded        | boolean | false                    | If true, the banner will be initially expanded with details visible |
 | language                 | string  | 'en'                     | Language for the banner text. Supports multi-language configuration. |
 | logoDarkUrl              | string  | null                     | URL for the logo to display in dark mode                      |
 | logoUrl                  | string  | null                     | URL for the logo to display in the banner                     |

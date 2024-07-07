@@ -13,7 +13,7 @@ import autoAnimate from '@formkit/auto-animate';
 const CookieBanner = ({ 
   config = {}, 
   onClose, 
-  initiallyExpanded = false,
+  initiallyExpanded,
   onAccept,
   onReject,
   onPreferenceChange
