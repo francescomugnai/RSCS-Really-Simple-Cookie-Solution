@@ -24,7 +24,7 @@ npm install rscs
 
 Alternatively, include via CDN:
 ```html
-<script src="https://unpkg.com/rscs@latest/dist/rscs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mugnai/rscs@latest/dist/cookie-banner-widget.umd.js"></script>
 ```
 
 #### Quick start 🏃‍♂️
@@ -254,12 +254,24 @@ With this configuration, RSCS will automatically handle the loading and unloadin
 #### Contributing 🤝
 We welcome contributions to make RSCS even better. If you have any ideas or find any bugs, please open an issue or submit a pull request.
 
-#### License 📄
-RSCS is MIT licensed.
-RSCS (Really Simple Cookie Solution) is an open-source tool designed to help website owners manage cookie consent and preferences. While RSCS simplifies cookie management, it does not guarantee full compliance with data privacy laws (e.g., GDPR, CCPA). Website owners are responsible for ensuring proper implementation, providing accurate cookie information, obtaining user consent, and maintaining compliance with applicable regulations. RSCS should be used as part of a comprehensive approach to data privacy and not as a substitute for legal advice.
-
 #### Font 🖋️
 
 RSCS uses the Inter font, which is loaded from Bunny Fonts, a privacy-friendly alternative to Google Fonts. The Inter font is licensed under the SIL Open Font License 1.1.
 [OFL-1.1](https://scripts.sil.org/OFL)
 Copyright 2020 [The Inter Project Authors](https://github.com/rsms/inter)
+
+
+#### Testing 🧪
+
+RSCS uses Vitest and Testing Library for unit and integration testing. To run the tests:
+
+1. Ensure you have all dependencies installed.
+2. Run the tests:
+
+```bash
+npm run test
+```
+
+#### License 📄
+RSCS is MIT licensed.
+RSCS (Really Simple Cookie Solution) is an open-source tool designed to help website owners manage cookie consent and preferences. While RSCS simplifies cookie management, it does not guarantee full compliance with data privacy laws (e.g., GDPR, CCPA). Website owners are responsible for ensuring proper implementation, providing accurate cookie information, obtaining user consent, and maintaining compliance with applicable regulations. RSCS should be used as part of a comprehensive approach to data privacy and not as a substitute for legal advice.
