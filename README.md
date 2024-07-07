@@ -31,13 +31,31 @@ Alternatively, include via CDN:
 
 #### Quick start 🏃‍♂️
 
-import CookieBannerWidget from 'rscs';
+Npm:
 
 ```js
+import CookieBannerWidget from 'rscs';
+
 CookieBannerWidget.init({
   language: 'en',
   autoBlock: true,
 });
+```
+
+CDN:
+
+```html
+    <script src="https://cdn.jsdelivr.net/npm/@mugnai/rscs@latest/dist/cookie-banner-widget.umd.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.CookieBannerWidget) {
+                window.CookieBannerWidget.init({
+                    language: 'it', 
+                    preferencesButtonText: 'Preferenze Cookie',
+                });
+            } 
+        });
+    </script>
 ```
 
 #### Complete Configuration Example 🛠️
@@ -184,6 +202,9 @@ You can manually block specific resources by adding the data-cookie-type attribu
 
 In this example, the Spotify embed will only load if the user has accepted marketing cookies.
 
+Note: While this method is generally effective, it may not work in all cases due to the way some third-party resources are loaded. However, it's still worth trying as it can provide a good level of control in many situations. 
+For more reliable blocking of specific domains, consider using the blockedDomains configuration option.
+
 #### Customizing Blocked Domains 🚫
 RSCS comes with a predefined list of domains to block. You can customize this list by setting useDefaultBlockedDomains to false and passing an array of domains to blockedDomains:
 
@@ -191,13 +212,15 @@ RSCS comes with a predefined list of domains to block. You can customize this li
 import CookieBannerWidget from 'rscs';
 
 CookieBannerWidget.init({
-  containerId: 'cookie-banner-container',
   language: 'en',
   autoBlock: true,
   useDefaultBlockedDomains: false,
   blockedDomains: ['youtube.com', 'facebook.com', 'your-custom-domain.com']
 });
 ```
+
+**Disclaimer:** The pre-configured list of blocked domains is intended as a starting point for enhancing user privacy. It is the responsibility of the implementer to review, customize, and maintain this list in accordance with their specific use case, legal obligations, and ethical considerations. We make no representations or warranties regarding the completeness or accuracy of this list and reserve the right to modify it at any time. Users of this library assume full responsibility for the implementation and consequences of using this feature.
+
 
 #### Default cookieTypes Configuration
 
