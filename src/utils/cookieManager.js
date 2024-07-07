@@ -55,6 +55,28 @@ export const canLoadResource = (resourceType) => {
   return preferences[resourceType] || false;
 };
 
+export const getBlockedElementsTitles = () => {
+  const blockedElements = document.querySelectorAll('[data-cookie-type]');
+  const blockedTitles = {};
+
+  blockedElements.forEach(el => {
+    const type = el.getAttribute('data-cookie-type');
+    const title = el.getAttribute('title') || 'No title';
+
+    if (!blockedTitles[type]) {
+      blockedTitles[type] = new Set();
+    }
+
+    blockedTitles[type].add(title);
+  });
+
+  Object.keys(blockedTitles).forEach(type => {
+    blockedTitles[type] = Array.from(blockedTitles[type]);
+  });
+
+  return blockedTitles;
+};
+
 export const blockResources = () => {
   document.querySelectorAll('[data-cookie-type]').forEach(el => {
     const type = el.getAttribute('data-cookie-type');

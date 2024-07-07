@@ -442,3 +442,28 @@
     opacity: 1;
   }
 }
+
+.cookie-option ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cookie-option li {
+  margin: 0 4px 4px 0;
+  padding: 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2em 0.6em !important;
+  margin: 0.2em !important;
+  font-size: 0.75em;
+  font-weight: 600;
+  color: white;
+  background-color: var(--color-primary);
+  border-radius: 0.25em;
+  text-align: center;
+}

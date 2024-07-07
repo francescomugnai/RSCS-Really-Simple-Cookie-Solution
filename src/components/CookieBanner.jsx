@@ -1,11 +1,11 @@
-// CookieBanner.jsx
 import { useState, useEffect, useRef } from 'preact/hooks';
 import { loadGoogleAnalytics, removeGoogleAnalytics } from '../utils/analytics';
 import { 
   setCookiePreferences as saveCookiePreferences, 
   unblockResources, 
   blockResources,
-  getCookiePreferences 
+  getCookiePreferences,
+  getBlockedElementsTitles
 } from '../utils/cookieManager';
 import '../styles/CookieBanner.css';
 import autoAnimate from '@formkit/auto-animate';
@@ -25,9 +25,11 @@ const CookieBanner = ({
     analytics: false,
     marketing: false,
   });
+  const [blockedTitles, setBlockedTitles] = useState({});
 
   useEffect(() => {
     setShowDetails(initiallyExpanded);
+    setBlockedTitles(getBlockedElementsTitles());
   }, [initiallyExpanded]);
 
   const detailsRef = useRef(null);
@@ -157,6 +159,11 @@ const CookieBanner = ({
     }, 500);
   };
 
+  const handleCloseBanner = () => {
+    handleReject();
+    onClose();
+  };
+
   useEffect(() => {
     console.log('showDetails:', showDetails);
   }, [showDetails]);
@@ -166,7 +173,7 @@ const CookieBanner = ({
   return (
     <div className={`cookie-banner ${showDetails ? 'show-details' : ''} ${config.position}`} data-testid="cookie-banner">
       <div className="cookie-banner-content">
-      <button onClick={onClose} className="close-button">{config.closeButtonText}</button>
+      <button onClick={handleCloseBanner} className="close-button">{config.closeButtonText}</button>
         
         {(config.logoUrl || config.logoDarkUrl) && (
           <div className="logo-container">
@@ -223,6 +230,13 @@ const CookieBanner = ({
                   <div>
                     <label htmlFor={type}>{title}</label>
                     <p>{description}</p>
+                    {blockedTitles[type] && (
+                      <ul>
+                        {blockedTitles[type].map((title, index) => (
+                          <li key={index} className="badge">{title}</li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </div>
               ))}
