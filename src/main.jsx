@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // saveButtonText: 'Custom Save Preferences',
     // acceptAllButtonText: 'Custom Accept All',
     // closeButtonText: 'Custom Close',
+    preferencesButtonColor: '#FF5733', // Imposta un colore personalizzato
     colorMode: 'dark',
     placeholders: false,
     // privacyPolicyUrl: 'https://www.example.com/privacy-policy',
