@@ -1,6 +1,6 @@
 @import url('https://fonts.bunny.net/css?family=inter:400,500,600');
 
-:root {
+[data-cookie-banner-widget] {
   --color-background: #ffffff;
   --color-text: #1a202c;
   --color-text-secondary: #4a5568;
@@ -17,7 +17,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+ [data-cookie-banner-widget] {
     --color-background: #2d3748;
     --color-text: #e2e8f0;
     --color-text-secondary: #a0aec0;
@@ -63,7 +63,7 @@
   }
 }
 
-.cookie-banner {
+[data-cookie-banner-widget] .cookie-banner {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -82,20 +82,20 @@
   animation: slideInBottom 0.3s ease-out;
 }
 
-.cookie-banner.bottom-left {
+[data-cookie-banner-widget] .cookie-banner.bottom-left {
   left: 20px;
   right: auto;
   animation: slideInBottomLeft 0.3s ease-out;
 }
 
-.cookie-banner.bottom-center {
+[data-cookie-banner-widget] .cookie-banner.bottom-center {
   left: 50%;
   right: auto;
   transform: translateX(-50%);
   animation: slideInBottomCenter 0.3s ease-out;
 }
 
-.cookie-banner h2 {
+[data-cookie-banner-widget] .cookie-banner h2 {
   margin-top: 0;
   margin-bottom: 12px;
   font-size: 1.2em;
@@ -104,38 +104,40 @@
   padding-right: 24px;
 }
 
-.cookie-banner p {
+[data-cookie-banner-widget] .cookie-banner p {
   margin-bottom: 20px;
   color: var(--color-text-secondary);
   font-size: 0.9em;
   line-height: 1.5;
 }
 
-.close-button {
-  position: absolute;
-  top: 6px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 16px;
-  line-height: 1;
+[data-cookie-banner-widget] .close-button {
+  position: absolute !important;
+  top: 6px !important;
+  right: 16px !important;
+  background: none !important;
+  border: none !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
   color: var(--color-close);
-  cursor: pointer;
-  transition: color 0.2s ease;
+  cursor: pointer !important;
+  transition: color 0.2s ease !important;
+  padding: 0px !important;
+  letter-spacing: 0px !important;
 }
 
-.close-button:hover {
+[data-cookie-banner-widget] .close-button:hover {
   color: var(--color-close-hover);
 }
 
-.cookie-buttons {
+[data-cookie-banner-widget] .cookie-buttons {
   display: flex;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 16px;
 }
 
-.cookie-button {
+[data-cookie-banner-widget] .cookie-button {
   flex: 1;
   padding: 10px 16px;
   border: none;
@@ -147,25 +149,25 @@
   text-align: center;
 }
 
-.accept-button {
+[data-cookie-banner-widget] .accept-button {
   background-color: var(--color-primary);
   color: white;
 }
 
-.accept-button:hover {
+[data-cookie-banner-widget] .accept-button:hover {
   background-color: var(--color-primary-hover);
 }
 
-.reject-button {
+[data-cookie-banner-widget] .reject-button {
   background-color: var(--color-secondary);
   color: var(--color-text-secondary);
 }
 
-.reject-button:hover {
+[data-cookie-banner-widget] .reject-button:hover {
   background-color: var(--color-secondary-hover);
 }
 
-.details-link {
+[data-cookie-banner-widget] .details-link {
   display: block;
   width: 100%;
   text-align: center;
@@ -179,51 +181,99 @@
   transition: color 0.2s ease;
 }
 
-.details-link:hover {
+[data-cookie-banner-widget] .details-link:hover {
   color: var(--color-primary-hover);
 }
 
-.cookie-options {
+[data-cookie-banner-widget] .cookie-options {
   margin-top: 20px;
   border-top: 1px solid var(--color-border);
   padding-top: 20px;
 }
 
-.cookie-option {
+[data-cookie-banner-widget] .cookie-option {
   display: flex;
   align-items: flex-start;
   margin-bottom: 16px;
 }
 
-.cookie-option input[type="checkbox"] {
+/* Aggiungi questo al tuo CSS esistente */
+
+[data-cookie-banner-widget] .cookie-option input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-primary);
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
   margin-right: 12px;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
-.cookie-option label {
+[data-cookie-banner-widget] .cookie-option input[type="checkbox"]:checked {
+  background-color: var(--color-primary);
+}
+
+[data-cookie-banner-widget] .cookie-option input[type="checkbox"]:checked::after {
+  content: '\2714';
+  font-size: 14px;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+[data-cookie-banner-widget] .cookie-option input[type="checkbox"]:hover {
+  border-color: var(--color-primary-hover);
+}
+
+[data-cookie-banner-widget] .cookie-option input[type="checkbox"]:disabled {
+  border-color: var(--color-text-secondary);
+  background-color: var(--color-secondary);
+  cursor: not-allowed;
+}
+
+[data-cookie-banner-widget] .cookie-option input[type="checkbox"]:disabled:checked::after {
+  color: var(--color-text-secondary);
+}
+
+[data-cookie-banner-widget] .cookie-option label {
+  display: flex;
+  align-items: center;
   font-weight: 500;
   color: var(--color-text);
   font-size: 0.95em;
+  cursor: pointer;
 }
 
-.cookie-option p {
+[data-cookie-banner-widget] .cookie-option label:hover {
+  color: var(--color-primary);
+}
+
+[data-cookie-banner-widget] .cookie-option p {
   margin: 4px 0 0;
   font-size: 0.85em;
   color: var(--color-text-secondary);
 }
 
-.save-button {
+[data-cookie-banner-widget] .save-button {
   width: 100%;
   background-color: var(--color-success);
   color: white;
   margin-top: 16px;
 }
 
-.save-button:hover {
+[data-cookie-banner-widget] .save-button:hover {
   background-color: var(--color-success-hover);
 }
 
-.preferences-button {
+[data-cookie-banner-widget] .preferences-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -242,41 +292,40 @@
   background-color: inherit; 
 }
 
-
-.preferences-button::before {
+[data-cookie-banner-widget] .preferences-button::before {
   content: '🍪';
   font-size: 28px;
   line-height: 1;
 }
 
-.preferences-button:hover {
+[data-cookie-banner-widget] .preferences-button:hover {
   transform: scale(1.1);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 480px) {
-  .preferences-button {
+  [data-cookie-banner-widget] .preferences-button {
     width: 48px;
     height: 48px;
   }
 
-  .preferences-button::before {
+  [data-cookie-banner-widget] .preferences-button::before {
     font-size: 24px;
   }
 }
 
-.logo-container {
+[data-cookie-banner-widget] .logo-container {
   text-align: left;
   margin-bottom: 16px;
 }
 
-.banner-logo {
+[data-cookie-banner-widget] .banner-logo {
   max-width: 100px;
   max-height: 40px;
   object-fit: contain;
 }
 
-.scroll-top-button {
+[data-cookie-banner-widget] .scroll-top-button {
   position: sticky;
   bottom: 10px;
   left: 50%;
@@ -291,13 +340,13 @@
   transition: all 0.2s ease;
 }
 
-.scroll-top-button:hover {
+[data-cookie-banner-widget] .scroll-top-button:hover {
   background-color: var(--color-primary-hover);
   transform: translateX(-50%) translateY(-2px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.blocked-content-placeholder {
+[data-cookie-banner-widget] .blocked-content-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -311,34 +360,34 @@
   box-sizing: border-box;
 }
 
-.blocked-content-placeholder::before {
+[data-cookie-banner-widget] .blocked-content-placeholder::before {
   content: attr(data-placeholder-text);
   max-width: 80%;
 }
 
-.privacy-policy-link {
+[data-cookie-banner-widget] .privacy-policy-link {
   margin-top: 10px;
   font-size: 0.9em;
 }
 
-.privacy-policy-link a {
+[data-cookie-banner-widget] .privacy-policy-link a {
   color: var(--color-primary);
   text-decoration: underline;
 }
 
-.privacy-policy-link a:hover {
+[data-cookie-banner-widget] .privacy-policy-link a:hover {
   text-decoration: none;
 }
 
-.cookie-banner-content {
+[data-cookie-banner-widget] .cookie-banner-content {
   position: relative;
 }
 
-.cookie-banner.show-details {
+[data-cookie-banner-widget] .cookie-banner.show-details {
   max-height: 80vh;
 }
 
-.force-light {
+[data-cookie-banner-widget] .force-light {
   --color-background: #ffffff !important;
   --color-text: #1a202c !important;
   --color-text-secondary: #4a5568 !important;
@@ -354,7 +403,7 @@
   --shadow-color: rgba(0, 0, 0, 0.15) !important;
 }
 
-.force-dark {
+[data-cookie-banner-widget] .force-dark {
   --color-background: #2d3748 !important;
   --color-text: #e2e8f0 !important;
   --color-text-secondary: #a0aec0 !important;
@@ -367,19 +416,19 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .light-logo {
+  [data-cookie-banner-widget] .light-logo {
     display: none;
   }
   
-  .dark-logo {
+  [data-cookie-banner-widget] .dark-logo {
     display: inline-block;
   }
 }
 
 @media (max-width: 480px) {
-  .cookie-banner,
-  .cookie-banner.bottom-left,
-  .cookie-banner.bottom-center {
+  [data-cookie-banner-widget] .cookie-banner,
+  [data-cookie-banner-widget] .cookie-banner.bottom-left,
+  [data-cookie-banner-widget] .cookie-banner.bottom-center {
     bottom: 0;
     left: 0;
     right: 0;
@@ -391,20 +440,20 @@
     animation: slideInBottom 0.3s ease-out;
   }
 
-  .cookie-buttons {
+  [data-cookie-banner-widget] .cookie-buttons {
     flex-direction: column;
   }
   
-  .cookie-button {
+  [data-cookie-banner-widget] .cookie-button {
     width: 100%;
   }
   
-  .preferences-button {
+  [data-cookie-banner-widget] .preferences-button {
     bottom: 10px;
     right: 10px;
   }
 
-  .cookie-options {
+  [data-cookie-banner-widget] .cookie-options {
     padding-bottom: 60px; 
   }
 }
@@ -443,7 +492,7 @@
   }
 }
 
-.cookie-option ul {
+[data-cookie-banner-widget] .cookie-option ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -451,12 +500,12 @@
   flex-wrap: wrap;
 }
 
-.cookie-option li {
+[data-cookie-banner-widget] .cookie-option li {
   margin: 0 4px 4px 0;
   padding: 0;
 }
 
-.badge {
+[data-cookie-banner-widget] .badge {
   display: inline-block;
   padding: 0.2em 0.6em !important;
   margin: 0.2em !important;
@@ -483,6 +532,6 @@
   }
 }
 
-.cookie-banner.slide-out {
+[data-cookie-banner-widget] .cookie-banner.slide-out {
   animation: slideOutToBottom 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }

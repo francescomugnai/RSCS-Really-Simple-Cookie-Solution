@@ -214,7 +214,7 @@ const CookieBannerWidget = {
       }, []);
 
       return (
-        <>
+        <div data-cookie-banner-widget>
           {showBanner && (
             <CookieBanner
               config={translatedConfig}
@@ -231,7 +231,7 @@ const CookieBannerWidget = {
               color={finalConfig.preferencesButtonColor}
             />
           }
-        </>
+        </div>
       );
     };
 
