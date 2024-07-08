@@ -219,7 +219,6 @@ CookieBannerWidget.init({
 });
 ```
 
-**Disclaimer:** The pre-configured list of blocked domains is intended as a starting point for enhancing user privacy. It is the responsibility of the implementer to review, customize, and maintain this list in accordance with their specific use case, legal obligations, and ethical considerations. We make no representations or warranties regarding the completeness or accuracy of this list and reserve the right to modify it at any time. Users of this library assume full responsibility for the implementation and consequences of using this feature.
 
 
 #### Default cookieTypes Configuration
@@ -274,7 +273,7 @@ CookieBannerWidget.init({
 With this configuration, RSCS will automatically handle the loading and unloading of Google Analytics based on user consent for the specified cookie category.
 
 #### Contributing 🤝
-We welcome contributions to make RSCS even better. If you have any ideas or find any bugs, please open an issue or submit a pull request.
+I welcome contributions to make RSCS even better. If you have any ideas or find any bugs, please open an issue or submit a pull request.
 
 #### Font 🖋️
 
@@ -294,6 +293,14 @@ RSCS uses Vitest and Testing Library for unit and integration testing. To run th
 npm run test
 ```
 
-#### License 📄
+
+
+
+**Disclaimer:** 
 RSCS is MIT licensed.
 RSCS (Really Simple Cookie Solution) is an open-source tool designed to help website owners manage cookie consent and preferences. While RSCS simplifies cookie management, it does not guarantee full compliance with data privacy laws (e.g., GDPR, CCPA). Website owners are responsible for ensuring proper implementation, providing accurate cookie information, obtaining user consent, and maintaining compliance with applicable regulations. RSCS should be used as part of a comprehensive approach to data privacy and not as a substitute for legal advice.
+
+The pre-configured list of blocked domains is provided solely as an example and should not be considered comprehensive or definitive. It is intended to serve as a basic demonstration of the auto-blocking feature's functionality. I strongly recommend that implementers thoroughly review, customize, and maintain their own list of domains based on their specific use case, legal requirements, and ethical considerations.
+This example list should not be used as-is in a production environment. It is crucial to tailor the list to your particular needs and to keep it updated regularly. The responsibility for the selection and management of blocked domains lies entirely with the implementer.
+I make no representations or warranties regarding the suitability, completeness, or accuracy of this example list. Users of this library assume full responsibility for the implementation, customization, and any consequences arising from the use of this feature.
+Remember: A personalized and well-maintained list is key to effectively balancing user privacy with necessary functionality in your specific context.

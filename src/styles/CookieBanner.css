@@ -467,3 +467,22 @@
   border-radius: 0.25em;
   text-align: center;
 }
+
+@keyframes slideOutToBottom {
+  0% {
+    transform: translateY(0) rotate(0);
+    opacity: 1;
+  }
+  20% {
+    transform: translateY(-10px) rotate(-2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%) rotate(5deg);
+    opacity: 0;
+  }
+}
+
+.cookie-banner.slide-out {
+  animation: slideOutToBottom 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}

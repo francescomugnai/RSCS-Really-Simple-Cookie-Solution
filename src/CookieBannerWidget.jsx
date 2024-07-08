@@ -19,13 +19,14 @@ import PreferencesButton from './components/PreferencesButton';
 const CookieBannerWidget = {
   initialized: false,
   callbacks: {},
+  showPreferencesButton: false,
 
   init(config = {}) {
     if (this.initialized) {
       console.warn('CookieBannerWidget è già stato inizializzato.');
       return;
     }
-    
+
     const defaultConfig = {
       containerId: 'cookie-banner-container-' + Math.random().toString(36).substr(2, 9),
       preferencesButtonId: 'cookie-preferences-button',
@@ -89,12 +90,12 @@ const CookieBannerWidget = {
       container.id = finalConfig.containerId;
       document.body.appendChild(container);
     }
-    
+
     if (!container) {
       console.error(`Container con id '${finalConfig.containerId}' non trovato`);
       return;
     }
-    
+
     const lang = finalConfig.language in translations ? finalConfig.language : 'en';
 
     let translatedConfig = { ...finalConfig };
@@ -112,7 +113,7 @@ const CookieBannerWidget = {
         hideDetailsLinkText: finalConfig.hideDetailsLinkText || baseTranslations.hideDetailsLinkText,
         cookieTypes: { ...finalConfig.cookieTypes },
       };
-    
+
       if (baseTranslations.cookieTypes) {
         Object.keys(baseTranslations.cookieTypes).forEach(type => {
           if (translatedConfig.cookieTypes[type]) {
@@ -139,7 +140,7 @@ const CookieBannerWidget = {
         hideDetailsLinkText: defaultEnglishTranslations.hideDetailsLinkText || finalConfig.hideDetailsLinkText,
         cookieTypes: { ...finalConfig.cookieTypes },
       };
-    
+
       if (defaultEnglishTranslations.cookieTypes) {
         Object.keys(defaultEnglishTranslations.cookieTypes).forEach(type => {
           if (translatedConfig.cookieTypes[type]) {
@@ -153,7 +154,7 @@ const CookieBannerWidget = {
         });
       }
     }
-    
+
     const initializedConfig = initializeCookieManager({
       ...translatedConfig,
       cookieTypes: {
@@ -161,7 +162,7 @@ const CookieBannerWidget = {
         ...finalConfig.cookieTypes
       }
     });
-    
+
     const WidgetWrapper = () => {
       const [showBanner, setShowBanner] = useState(false);
       const [showPreferencesButton, setShowPreferencesButton] = useState(false);
@@ -170,7 +171,7 @@ const CookieBannerWidget = {
       useEffect(() => {
         const preferences = getCookiePreferences();
         setShowBanner(!preferences);
-        setShowPreferencesButton(!!preferences && finalConfig.showPreferencesButton);
+        setShowPreferencesButton(!!preferences || CookieBannerWidget.showPreferencesButton);
       }, []);
 
       useEffect(() => {
@@ -190,11 +191,12 @@ const CookieBannerWidget = {
         setShowPreferencesButton(false);
         setExpandedBanner(true);
       };
-    
+
       const handleCloseBanner = () => {
         setShowBanner(false);
         setShowPreferencesButton(true);
         setExpandedBanner(false);
+        CookieBannerWidget.showPreferencesButton = true;
       };
 
       useEffect(() => {
@@ -203,7 +205,7 @@ const CookieBannerWidget = {
           customPreferencesButton.addEventListener('click', handleTogglePreferences);
           setShowPreferencesButton(false);
         }
-    
+
         return () => {
           if (customPreferencesButton) {
             customPreferencesButton.removeEventListener('click', handleTogglePreferences);
@@ -214,18 +216,18 @@ const CookieBannerWidget = {
       return (
         <>
           {showBanner && (
-            <CookieBanner 
-              config={translatedConfig}  
-              onClose={handleCloseBanner} 
+            <CookieBanner
+              config={translatedConfig}
+              onClose={handleCloseBanner}
               initiallyExpanded={expandedBanner}
-              onAccept={config.onAccept}
-              onReject={config.onReject}
-              onPreferenceChange={config.onPreferenceChange}
+              onAccept={finalConfig.onAccept}
+              onReject={finalConfig.onReject}
+              onPreferenceChange={finalConfig.onPreferenceChange}
             />
           )}
-          {showPreferencesButton && !document.getElementById(finalConfig.preferencesButtonId) && 
-            <PreferencesButton 
-              onClick={handleTogglePreferences} 
+          {showPreferencesButton && !document.getElementById(finalConfig.preferencesButtonId) &&
+            <PreferencesButton
+              onClick={handleTogglePreferences}
               color={finalConfig.preferencesButtonColor}
             />
           }

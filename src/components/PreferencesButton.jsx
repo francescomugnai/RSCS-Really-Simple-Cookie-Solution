@@ -6,7 +6,7 @@ const PreferencesButton = ({ onClick, color }) => {
 
   useEffect(() => {
     const preferences = getCookiePreferences();
-    setShowButton(!!preferences);
+    setShowButton(!!preferences || CookieBannerWidget.showPreferencesButton);
   }, []);
 
   if (!showButton) return null;

@@ -26,17 +26,24 @@ const CookieBanner = ({
     marketing: false,
   });
   const [blockedTitles, setBlockedTitles] = useState({});
+  const [isClosing, setIsClosing] = useState(false); 
+  const bannerRef = useRef(null); 
+  const detailsRef = useRef(null); 
+
+  useEffect(() => {
+    if (config.useAnimations && detailsRef.current) {
+      autoAnimate(detailsRef.current);
+    }
+  }, [config.useAnimations]);
 
   useEffect(() => {
     setShowDetails(initiallyExpanded);
     setBlockedTitles(getBlockedElementsTitles());
   }, [initiallyExpanded]);
 
-  const detailsRef = useRef(null);
-
   useEffect(() => {
-    if (config.useAnimations && detailsRef.current) {
-      autoAnimate(detailsRef.current);
+    if (config.useAnimations && bannerRef.current) {
+      autoAnimate(bannerRef.current);
     }
   }, [config.useAnimations]);
 
@@ -53,7 +60,9 @@ const CookieBanner = ({
   }, []);
 
   const toggleDetails = () => {
-    setShowDetails(prev => !prev);
+    setTimeout(() => {
+      setShowDetails(prev => !prev);
+    }, 50);
   };
 
   const removeGoogleAnalyticsCookies = () => {
@@ -160,8 +169,14 @@ const CookieBanner = ({
   };
 
   const handleCloseBanner = () => {
-    handleReject();
-    onClose();
+    if (bannerRef.current) {
+      setIsClosing(true); 
+      setTimeout(() => {
+        if (onClose) onClose();
+      }, 500);
+    } else {
+      if (onClose) onClose();
+    }
   };
 
   useEffect(() => {
@@ -171,9 +186,13 @@ const CookieBanner = ({
   if (!Object.keys(config.cookieTypes).length) return null;
 
   return (
-    <div className={`cookie-banner ${showDetails ? 'show-details' : ''} ${config.position}`} data-testid="cookie-banner">
+    <div 
+      ref={bannerRef} 
+      className={`cookie-banner ${showDetails ? 'show-details' : ''} ${config.position} ${isClosing ? 'slide-out' : ''}`} 
+      data-testid="cookie-banner"
+    >
       <div className="cookie-banner-content">
-      <button onClick={handleCloseBanner} className="close-button">{config.closeButtonText}</button>
+        <button onClick={handleCloseBanner} className="close-button">{config.closeButtonText}</button>
         
         {(config.logoUrl || config.logoDarkUrl) && (
           <div className="logo-container">
