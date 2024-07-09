@@ -34,7 +34,7 @@ Alternatively, include via CDN:
 Npm:
 
 ```js
-import CookieBannerWidget from 'rscs';
+import CookieBannerWidget from '@mugnai/rscs';
 
 CookieBannerWidget.init({
   language: 'en',
