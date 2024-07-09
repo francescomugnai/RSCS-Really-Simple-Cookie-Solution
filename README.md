@@ -21,7 +21,7 @@ It's designed to be flexible, customizable, and compliant with GDPR and other co
 Install via npm:
 
 ```bash
-npm install rscs
+npm install @mugnai/rscs
 ```
 
 Alternatively, include via CDN:
