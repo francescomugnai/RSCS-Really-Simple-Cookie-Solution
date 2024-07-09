@@ -9,15 +9,20 @@ import {
 } from '../utils/cookieManager';
 import '../styles/CookieBanner.css';
 import autoAnimate from '@formkit/auto-animate';
+import translations from '../locales/translation';
 
 const CookieBanner = ({ 
   config = {}, 
+  defaultConfig = {},
   onClose, 
   initiallyExpanded,
   onAccept,
   onReject,
-  onPreferenceChange
+  onPreferenceChange,
+  language
 }) => {
+  const t = translations[language] || translations['en'];
+  
   const [showDetails, setShowDetails] = useState(initiallyExpanded);
   const [cookiePreferences, setCookiePreferences] = useState({
     necessary: true,
@@ -179,10 +184,26 @@ const CookieBanner = ({
     }
   };
 
-  useEffect(() => {
-    console.log('showDetails:', showDetails);
-  }, [showDetails]);
-
+  const getText = (key, subKey = null) => {
+    if (subKey) {
+      // Gestione delle chiavi annidate (per cookieTypes)
+      const configValue = config.cookieTypes?.[key]?.[subKey];
+      const defaultConfigValue = defaultConfig.cookieTypes?.[key]?.[subKey];
+      const translationValue = t.cookieTypes?.[key]?.[subKey];
+      const fallbackValue = translations['en'].cookieTypes?.[key]?.[subKey];
+  
+      if (configValue && configValue !== defaultConfigValue && configValue.trim() !== '') {
+        return configValue;
+      }
+      return translationValue || fallbackValue || configValue || defaultConfigValue || '';
+    } else {
+      // Gestione delle chiavi di primo livello (come prima)
+      if (config[key] && config[key] !== defaultConfig[key] && config[key].trim() !== '') {
+        return config[key];
+      }
+      return t[key] || translations['en'][key] || config[key] || defaultConfig[key] || '';
+    }
+  };
   if (!Object.keys(config.cookieTypes).length) return null;
 
   return (
@@ -192,7 +213,9 @@ const CookieBanner = ({
       data-testid="cookie-banner"
     >
       <div className="cookie-banner-content">
-        <button onClick={handleCloseBanner} className="close-button">{config.closeButtonText}</button>
+        <button onClick={handleCloseBanner} className="close-button">
+          {getText('closeButtonText')}
+        </button>
         
         {(config.logoUrl || config.logoDarkUrl) && (
           <div className="logo-container">
@@ -200,30 +223,30 @@ const CookieBanner = ({
             {config.logoDarkUrl && <img src={config.logoDarkUrl} alt="Logo" className="banner-logo dark-logo" />}
           </div>
         )}
-        <h2>{config.bannerTitle}</h2>
-        <p>{config.bannerDescription}</p>
+        <h2>{getText('bannerTitle')}</h2>
+        <p>{getText('bannerDescription')}</p>
         {config.privacyPolicyUrl && (
           <p className="privacy-policy-link">
             <a href={config.privacyPolicyUrl} target="_blank" rel="noopener noreferrer">
-              {config.privacyPolicyLink}
+              {t.privacyPolicyLink}
             </a>
           </p>
         )}
 
-        <div className="cookie-buttons">
+<div className="cookie-buttons">
           <button 
             onClick={handleAcceptAll}
             className="cookie-button accept-button"
             data-testid="accept-button"
           >
-            {config.acceptAllButtonText}
+            {getText('acceptAllButtonText')}
           </button>
           <button 
             onClick={handleReject}
             className="cookie-button reject-button"
             data-testid="reject-button"
           >
-            {config.rejectAllButtonText || 'Reject All'}
+            {getText('rejectAllButtonText')}
           </button>
         </div>
 
@@ -231,14 +254,14 @@ const CookieBanner = ({
           onClick={toggleDetails}
           className="details-link"
         >
-          {showDetails ? (config.hideDetailsLinkText || 'Hide Details') : (config.detailsLinkText || 'Show Details')}
+          {showDetails ? config.hideDetailsLinkText : config.detailsLinkText}
         </button>
 
         <div ref={detailsRef}>
           {showDetails && (
             <div className="cookie-options" data-testid="cookie-options">
-              {Object.entries(config.cookieTypes).map(([type, { title, description }]) => (
-                <div key={type} className="cookie-option">
+            {config.cookieTypes && Object.entries(config.cookieTypes).map(([type, value]) => (
+                  <div key={type} className="cookie-option">
                   <input
                     type="checkbox"
                     id={type}
@@ -246,9 +269,9 @@ const CookieBanner = ({
                     onChange={() => handleToggle(type)}
                     disabled={type === 'necessary'}
                   />
-                  <div>
-                    <label htmlFor={type}>{title}</label>
-                    <p>{description}</p>
+                  <div className="cookie-option-text">
+                    <label htmlFor={type}>{getText(type, 'title')}</label>
+                    <p>{getText(type, 'description')}</p>
                     {blockedTitles[type] && (
                       <ul>
                         {blockedTitles[type].map((title, index) => (
@@ -258,7 +281,7 @@ const CookieBanner = ({
                     )}
                   </div>
                 </div>
-              ))}
+                ))}
               <button
                 onClick={handleSavePreferences}
                 className="cookie-button save-button"

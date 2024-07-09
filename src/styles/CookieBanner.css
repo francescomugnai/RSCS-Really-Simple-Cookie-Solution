@@ -197,7 +197,9 @@
   margin-bottom: 16px;
 }
 
-/* Aggiungi questo al tuo CSS esistente */
+[data-cookie-banner-widget] .cookie-option-text {
+  flex: 1;
+}
 
 [data-cookie-banner-widget] .cookie-option input[type="checkbox"] {
   -webkit-appearance: none;
@@ -205,6 +207,8 @@
   appearance: none;
   width: 20px;
   height: 20px;
+  min-width: 20px; 
+  min-height: 20px; 
   border: 2px solid var(--color-primary);
   border-radius: 4px;
   outline: none;
@@ -213,6 +217,7 @@
   cursor: pointer;
   margin-right: 12px;
   margin-top: 2px;
+  flex-shrink: 0; 
 }
 
 [data-cookie-banner-widget] .cookie-option input[type="checkbox"]:checked {

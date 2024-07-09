@@ -97,71 +97,34 @@ const CookieBannerWidget = {
     }
 
     const lang = finalConfig.language in translations ? finalConfig.language : 'en';
+    const t = translations[lang];
 
-    let translatedConfig = { ...finalConfig };
-    if (finalConfig.language && finalConfig.language in translations) {
-      const baseTranslations = translations[finalConfig.language];
-      translatedConfig = {
-        ...finalConfig,
-        bannerTitle: finalConfig.bannerTitle || baseTranslations.bannerTitle,
-        bannerDescription: finalConfig.bannerDescription || baseTranslations.bannerDescription,
-        acceptAllButtonText: finalConfig.acceptAllButtonText || baseTranslations.acceptAllButtonText,
-        rejectAllButtonText: finalConfig.rejectAllButtonText || baseTranslations.rejectAllButtonText,
-        saveButtonText: finalConfig.saveButtonText || baseTranslations.saveButtonText,
-        closeButtonText: finalConfig.closeButtonText || baseTranslations.closeButtonText,
-        detailsLinkText: finalConfig.detailsLinkText || baseTranslations.detailsLinkText,
-        hideDetailsLinkText: finalConfig.hideDetailsLinkText || baseTranslations.hideDetailsLinkText,
-        cookieTypes: { ...finalConfig.cookieTypes },
-      };
-
-      if (baseTranslations.cookieTypes) {
-        Object.keys(baseTranslations.cookieTypes).forEach(type => {
-          if (translatedConfig.cookieTypes[type]) {
-            translatedConfig.cookieTypes[type] = {
-              title: finalConfig.cookieTypes[type].title || baseTranslations.cookieTypes[type].title,
-              description: finalConfig.cookieTypes[type].description || baseTranslations.cookieTypes[type].description
-            };
-          } else {
-            translatedConfig.cookieTypes[type] = baseTranslations.cookieTypes[type];
+    const translatedConfig = {
+      ...finalConfig,
+      bannerTitle: finalConfig.bannerTitle !== defaultConfig.bannerTitle ? finalConfig.bannerTitle : t.bannerTitle,
+      bannerDescription: finalConfig.bannerDescription !== defaultConfig.bannerDescription ? finalConfig.bannerDescription : t.bannerDescription,
+      acceptAllButtonText: finalConfig.acceptAllButtonText !== defaultConfig.acceptAllButtonText ? finalConfig.acceptAllButtonText : t.acceptAllButtonText,
+      rejectAllButtonText: finalConfig.rejectAllButtonText !== defaultConfig.rejectAllButtonText ? finalConfig.rejectAllButtonText : t.rejectAllButtonText,
+      saveButtonText: finalConfig.saveButtonText !== defaultConfig.saveButtonText ? finalConfig.saveButtonText : t.saveButtonText,
+      closeButtonText: finalConfig.closeButtonText !== defaultConfig.closeButtonText ? finalConfig.closeButtonText : t.closeButtonText,
+      detailsLinkText: finalConfig.detailsLinkText !== defaultConfig.detailsLinkText ? finalConfig.detailsLinkText : t.detailsLinkText,
+      hideDetailsLinkText: finalConfig.hideDetailsLinkText !== defaultConfig.hideDetailsLinkText ? finalConfig.hideDetailsLinkText : t.hideDetailsLinkText,
+      cookieTypes: Object.fromEntries(
+        Object.entries(finalConfig.cookieTypes).map(([type, value]) => [
+          type,
+          {
+            title: value.title !== defaultConfig.cookieTypes[type]?.title 
+              ? value.title 
+              : (t.cookieTypes?.[type]?.title ?? defaultConfig.cookieTypes[type]?.title ?? value.title),
+            description: value.description !== defaultConfig.cookieTypes[type]?.description 
+              ? value.description 
+              : (t.cookieTypes?.[type]?.description ?? defaultConfig.cookieTypes[type]?.description ?? value.description)
           }
-        });
-      }
-    } else {
-      const defaultEnglishTranslations = translations['en'];
-      translatedConfig = {
-        ...finalConfig,
-        bannerTitle: defaultEnglishTranslations.bannerTitle || finalConfig.bannerTitle,
-        bannerDescription: defaultEnglishTranslations.bannerDescription || finalConfig.bannerDescription,
-        acceptAllButtonText: defaultEnglishTranslations.acceptAllButtonText || finalConfig.acceptAllButtonText,
-        rejectAllButtonText: defaultEnglishTranslations.rejectAllButtonText || finalConfig.rejectAllButtonText,
-        saveButtonText: defaultEnglishTranslations.saveButtonText || finalConfig.saveButtonText,
-        closeButtonText: defaultEnglishTranslations.closeButtonText || finalConfig.closeButtonText,
-        detailsLinkText: defaultEnglishTranslations.detailsLinkText || finalConfig.detailsLinkText,
-        hideDetailsLinkText: defaultEnglishTranslations.hideDetailsLinkText || finalConfig.hideDetailsLinkText,
-        cookieTypes: { ...finalConfig.cookieTypes },
-      };
+        ])
+      ),
+    };
 
-      if (defaultEnglishTranslations.cookieTypes) {
-        Object.keys(defaultEnglishTranslations.cookieTypes).forEach(type => {
-          if (translatedConfig.cookieTypes[type]) {
-            translatedConfig.cookieTypes[type] = {
-              ...defaultEnglishTranslations.cookieTypes[type],
-              ...translatedConfig.cookieTypes[type]
-            };
-          } else {
-            translatedConfig.cookieTypes[type] = defaultEnglishTranslations.cookieTypes[type];
-          }
-        });
-      }
-    }
-
-    const initializedConfig = initializeCookieManager({
-      ...translatedConfig,
-      cookieTypes: {
-        ...translatedConfig.cookieTypes,
-        ...finalConfig.cookieTypes
-      }
-    });
+    const initializedConfig = initializeCookieManager(translatedConfig);
 
     const WidgetWrapper = () => {
       const [showBanner, setShowBanner] = useState(false);
@@ -218,17 +181,20 @@ const CookieBannerWidget = {
           {showBanner && (
             <CookieBanner
               config={translatedConfig}
+              defaultConfig={defaultConfig}
               onClose={handleCloseBanner}
               initiallyExpanded={expandedBanner}
               onAccept={finalConfig.onAccept}
               onReject={finalConfig.onReject}
               onPreferenceChange={finalConfig.onPreferenceChange}
+              language={lang}
             />
           )}
           {showPreferencesButton && !document.getElementById(finalConfig.preferencesButtonId) &&
             <PreferencesButton
               onClick={handleTogglePreferences}
               color={finalConfig.preferencesButtonColor}
+              language={lang}
             />
           }
         </div>

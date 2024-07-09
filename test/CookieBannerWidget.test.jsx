@@ -170,7 +170,7 @@ describe('CookieBannerWidget', () => {
       expect(cookieOptions).toBeInTheDocument();
     });
 
-    const functionalityCheckbox = screen.getByLabelText('Functionality');
+    const functionalityCheckbox = screen.getByLabelText('Functional');
     fireEvent.click(functionalityCheckbox);
 
     const saveButton = screen.getByText('Save Preferences');
