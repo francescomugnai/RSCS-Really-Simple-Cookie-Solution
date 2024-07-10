@@ -124,6 +124,8 @@
   transition: color 0.2s ease !important;
   padding: 0px !important;
   letter-spacing: 0px !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
 }
 
 [data-cookie-banner-widget] .close-button:hover {
@@ -138,15 +140,17 @@
 }
 
 [data-cookie-banner-widget] .cookie-button {
-  flex: 1;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9em;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  text-align: center;
+  flex: 1 !important;
+  padding: 10px 16px !important;
+  border: none !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  font-size: 0.9em !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  text-align: center !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
 }
 
 [data-cookie-banner-widget] .accept-button {
@@ -168,17 +172,19 @@
 }
 
 [data-cookie-banner-widget] .details-link {
-  display: block;
-  width: 100%;
-  text-align: center;
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
   color: var(--color-primary);
-  background: none;
-  border: none;
-  font-size: 0.9em;
-  cursor: pointer;
-  text-decoration: underline;
-  margin-top: 8px;
-  transition: color 0.2s ease;
+  background: none !important;
+  border: none !important;
+  font-size: 0.9em !important;
+  cursor: pointer !important;
+  text-decoration: underline !important;
+  margin-top: 8px !important;
+  transition: color 0.2s ease !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
 }
 
 [data-cookie-banner-widget] .details-link:hover {
@@ -539,4 +545,16 @@
 
 [data-cookie-banner-widget] .cookie-banner.slide-out {
   animation: slideOutToBottom 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+[data-cookie-banner-widget] .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

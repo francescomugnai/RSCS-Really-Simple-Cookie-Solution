@@ -124,7 +124,7 @@ const CookieBannerWidget = {
       ),
     };
 
-    const initializedConfig = initializeCookieManager(translatedConfig);
+    initializeCookieManager(translatedConfig);
 
     const WidgetWrapper = () => {
       const [showBanner, setShowBanner] = useState(false);

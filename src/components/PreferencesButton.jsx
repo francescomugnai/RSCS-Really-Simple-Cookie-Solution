@@ -16,7 +16,7 @@ const PreferencesButton = ({ onClick, color }) => {
   };
 
   return (
-    <div
+    <button
       className="preferences-button"
       style={buttonStyle}
       onClick={(e) => {
@@ -24,8 +24,10 @@ const PreferencesButton = ({ onClick, color }) => {
         e.stopPropagation();
         onClick();
       }}
+      aria-label="Preferenze cookie"
     >
-    </div>
+            <span className="visually-hidden">Cookie preferences</span>
+    </button>
   );
 };
 
