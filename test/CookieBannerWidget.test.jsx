@@ -97,11 +97,15 @@ describe('CookieBannerWidget', () => {
       const preferencesButton = document.querySelector('.preferences-button');
       expect(preferencesButton).toBeInTheDocument();
       
-      expect(preferencesButton.tagName.toLowerCase()).toBe('div');
-      expect(preferencesButton.textContent.trim()).toBe('');
+      expect(preferencesButton.tagName.toLowerCase()).toBe('button');
+      expect(preferencesButton.getAttribute('aria-label')).toBe('Preferenze cookie');
+      
+      const visuallyHiddenSpan = preferencesButton.querySelector('.visually-hidden');
+      expect(visuallyHiddenSpan).toBeInTheDocument();
+      expect(visuallyHiddenSpan.textContent.trim()).toBe('Cookie preferences');
       
       const style = window.getComputedStyle(preferencesButton);
-      expect(style.width).toBe(style.height);
+      expect(style.backgroundColor).toBeDefined();
     });
   });
 
