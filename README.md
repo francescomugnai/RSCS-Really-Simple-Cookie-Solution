@@ -132,7 +132,7 @@ CookieBannerWidget.init({
 | colorMode                | string  | 'auto'                   | Color mode for the banner. Can be 'light', 'dark', or 'auto' |
 | cookieTypes              | object  | See default below        | Define custom cookie categories and their descriptions       |
 | desktopWidth             | string  | '380px'                  | Width of the banner on desktop devices                       |
-| googleAnalytics          | object  | { enabled: false, id: '', category: 'marketing' } | Configuration for Google Analytics integration |
+| analytics                | object  | { enabled: false, provider: null, config: {}, category: 'analytics' } | Configuration for analytics integration |
 | initiallyExpanded        | boolean | false                    | If true, the banner will be initially expanded with details visible |
 | language                 | string  | 'en'                     | Language for the banner text. Supports multi-language configuration. |
 | logoDarkUrl              | string  | null                     | URL for the logo to display in dark mode                     |
@@ -144,7 +144,7 @@ CookieBannerWidget.init({
 | useDefaultBlockedDomains | boolean | true                     | Whether to use the default list of blocked domains           |
 | position                 | string  | 'bottom-right'           | Position of the banner. Can be 'bottom-right', 'bottom-left', or 'bottom-center' |
 | preferencesButtonColor   | string  | '#4299e1'                | Color of the preferences button                              |
-| showPreferencesButton    | boolean | true                     | If false, the preferences button will not be shown           |
+| showPreferencesButton    | boolean | true                     | If false, the preferences button will not be shown
 
 
 #### Custom Preferences Button 🔘
@@ -268,22 +268,26 @@ CookieBannerWidget.init({
 });
 ```
 
-#### Google Analytics Integration 📊
+#### Analytics Integration 📊
 
-RSCS provides easy integration with Google Analytics. You can configure this in the init options:
+RSCS provides easy integration with multiple analytics providers, including Google Analytics and Fathom Analytics. You can configure this in the init options:
 
 ```js
 CookieBannerWidget.init({
   // ... other options ...
-  googleAnalytics: {
+  analytics: {
     enabled: true,
-    id: 'UA-XXXXXXXXX-X',  // Your Google Analytics ID
-    category: 'analytics'  // The cookie category for Google Analytics
+    provider: 'googleAnalytics', // or 'fathom'
+    config: {
+      // For Google Analytics:
+      id: 'UA-XXXXXXXXX-X', // Your Google Analytics ID
+      // OR for Fathom:
+      // siteId: 'ABCDEFGH' // Your Fathom site ID
+    },
+    category: 'analytics' // The cookie category for analytics
   }
 });
 ```
-
-With this configuration, RSCS will automatically handle the loading and unloading of Google Analytics based on user consent for the specified cookie category.
 
 #### Contributing 🤝
 I welcome contributions to make RSCS even better. If you have any ideas or find any bugs, please open an issue or submit a pull request.

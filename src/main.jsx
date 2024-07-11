@@ -21,6 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
     placeholders: false,
     // privacyPolicyUrl: 'https://www.example.com/privacy-policy',
     autoBlock: true,
+    // analytics: {
+    //   enabled: true,
+    //   provider: 'fathom',
+    //   config: { 
+    //     siteId: 'ABCDEFGH' 
+    //   },
+    //   category: 'analytics'
+    // },
     onAccept: (preferences) => {
       console.log('Cookies accepted:', preferences);
     },

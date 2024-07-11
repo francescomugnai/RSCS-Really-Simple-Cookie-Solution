@@ -1,50 +1,37 @@
 // utils/analytics.js
-export const loadGoogleAnalytics = (id) => {
-  if (!id) return;
-  removeGoogleAnalytics();
-  const scriptTag = document.createElement('script');
-  scriptTag.async = true;
-  scriptTag.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
-  
-  scriptTag.onload = () => {
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', id);
-  };
 
-  document.head.appendChild(scriptTag);
+import * as googleAnalytics from './analyticsProviders/googleAnalytics';
+import * as fathom from './analyticsProviders/fathom';
+// import * as matomo from './analyticsProviders/matomo';
+// import * as plausible from './analyticsProviders/plausible';
+
+const providers = {
+  googleAnalytics,
+  fathom
+  // matomo,
+  // plausible,
 };
 
-const removeGoogleAnalyticsCookies = () => {
-  const allCookies = document.cookie.split(';');
-  allCookies.forEach(cookie => {
-    const [name, _] = cookie.split('=').map(c => c.trim());
-    
-    if (name.startsWith('_ga') || name.startsWith('_gid') || name.startsWith('_gat')) {
-      const domains = [window.location.hostname, '.' + window.location.hostname, ''];
-      const paths = ['/', '', window.location.pathname];
-      
-      domains.forEach(domain => {
-        paths.forEach(path => {
-          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${path}${domain ? `; domain=${domain}` : ''}; secure; samesite=strict`;
-        });
-      });
-    }
-  });
+export const loadAnalytics = (provider, config) => {
+  if (providers[provider] && providers[provider].load) {
+    providers[provider].load(config);
+  } else {
+    console.warn(`Analytics provider '${provider}' not found or doesn't have a load method.`);
+  }
 };
 
-export const removeGoogleAnalytics = () => {
-  const scripts = document.querySelectorAll('script');
-  scripts.forEach(script => {
-    if (script.src.includes('googletagmanager.com/gtag/js')) {
-      script.remove();
-    }
-  });
+export const removeAnalytics = (provider) => {
+  if (providers[provider] && providers[provider].remove) {
+    providers[provider].remove();
+  } else {
+    console.warn(`Analytics provider '${provider}' not found or doesn't have a remove method.`);
+  }
+};
 
-  delete window.dataLayer;
-  delete window.gtag;
-
-  removeGoogleAnalyticsCookies();
-  setTimeout(removeGoogleAnalyticsCookies, 100);
+export const updateConsent = (provider, consentOptions) => {
+  if (providers[provider] && providers[provider].updateConsent) {
+    providers[provider].updateConsent(consentOptions);
+  } else {
+    console.warn(`Analytics provider '${provider}' not found or doesn't have an updateConsent method.`);
+  }
 };

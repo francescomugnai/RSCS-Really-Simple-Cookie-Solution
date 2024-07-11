@@ -52,10 +52,16 @@ const CookieBannerWidget = {
       preferencesButtonColor: '#4299e1', 
       privacyPolicyUrl: null,
       showPreferencesButton: true,
-      googleAnalytics: {
+      // googleAnalytics: {
+      //   enabled: false,
+      //   id: '',
+      //   category: 'marketing'
+      // },
+      analytics: {
         enabled: false,
-        id: '',
-        category: 'marketing'
+        provider: null, // 'googleAnalytics', 'fathom', etc.
+        config: {},
+        category: 'analytics'
       },
       cookieTypes: {
         necessary: {
@@ -136,6 +142,10 @@ const CookieBannerWidget = {
         const preferences = getCookiePreferences();
         setShowBanner(!preferences);
         setShowPreferencesButton(!!preferences || CookieBannerWidget.showPreferencesButton);
+    
+        if (finalConfig.analytics.enabled && preferences && preferences[finalConfig.analytics.category]) {
+          loadAnalytics(finalConfig.analytics.provider, finalConfig.analytics.config);
+        }
       }, []);
 
       useEffect(() => {
@@ -189,6 +199,7 @@ const CookieBannerWidget = {
               onReject={finalConfig.onReject}
               onPreferenceChange={finalConfig.onPreferenceChange}
               language={lang}
+              analytics={finalConfig.analytics}
             />
           )}
           {showPreferencesButton && !document.getElementById(finalConfig.preferencesButtonId) &&

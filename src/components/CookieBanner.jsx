@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
-import { loadGoogleAnalytics, removeGoogleAnalytics } from '../utils/analytics';
+import { loadAnalytics, removeAnalytics }  from '../utils/analytics';
+
 import { 
   setCookiePreferences as saveCookiePreferences, 
   unblockResources, 
@@ -19,7 +20,8 @@ const CookieBanner = ({
   onAccept,
   onReject,
   onPreferenceChange,
-  language
+  language,
+  analytics
 }) => {
   const t = translations[language] || translations['en'];
   
@@ -58,8 +60,8 @@ const CookieBanner = ({
       setCookiePreferences(savedPreferences);
       unblockResources();
       
-      if (!savedPreferences[config.googleAnalytics.category]) {
-        removeGoogleAnalyticsCookies();
+      if (config.analytics && !savedPreferences[config.analytics.category]) {
+        removeAnalytics(config.analytics.provider);
       }
     }
   }, []);
@@ -77,7 +79,7 @@ const CookieBanner = ({
     }, 50);
   };
 
-  const removeGoogleAnalyticsCookies = () => {
+  const removeAnalyticsCookies = () => {
     const removeCookies = () => {
       const allCookies = document.cookie.split(';');
       let cookiesRemoved = false;
@@ -85,7 +87,7 @@ const CookieBanner = ({
       allCookies.forEach(cookie => {
         const [name, _] = cookie.split('=').map(c => c.trim());
         
-        if (name.startsWith('_ga')) {          
+        if (name.startsWith('_ga') || name.startsWith('_gid') || name.startsWith('_gat')) {          
           const domains = [window.location.hostname, '.' + window.location.hostname, ''];
           const paths = ['/', '', window.location.pathname];
           
@@ -107,7 +109,7 @@ const CookieBanner = ({
 
     const attemptRemoval = () => {
       if (removeCookies() || attempt >= maxAttempts) {
-        console.log('Finished removing Google Analytics cookies');
+        console.log('Finished removing analytics cookies');
       } else {
         attempt++;
         setTimeout(attemptRemoval, 100);
@@ -133,8 +135,8 @@ const CookieBanner = ({
     saveCookiePreferences(allAccepted);
     unblockResources();
     
-    if (config.googleAnalytics && config.googleAnalytics.enabled) {
-      loadGoogleAnalytics(config.googleAnalytics.id);
+    if (analytics && analytics.enabled) {
+      loadAnalytics(analytics.provider, analytics.config);
     }
   
     if (onAccept) onAccept(allAccepted);
@@ -146,11 +148,12 @@ const CookieBanner = ({
     unblockResources();
     blockResources();
 
-    if (config.googleAnalytics && config.googleAnalytics.enabled) {
-      if (cookiePreferences[config.googleAnalytics.category]) {
-        loadGoogleAnalytics(config.googleAnalytics.id);
+    if (analytics && analytics.enabled) {
+      if (cookiePreferences[analytics.category]) {
+        loadAnalytics(analytics.provider, analytics.config);
       } else {
-        removeGoogleAnalytics();
+        removeAnalytics(analytics.provider);
+        removeAnalyticsCookies();
       }
     }
   
@@ -167,9 +170,9 @@ const CookieBanner = ({
     saveCookiePreferences(allRejected);
     blockResources();
     
-    if (config.googleAnalytics && config.googleAnalytics.enabled) {
-      removeGoogleAnalytics();
-      removeGoogleAnalyticsCookies();
+    if (analytics && analytics.enabled) {
+      removeAnalytics(analytics.provider);
+      removeAnalyticsCookies();
     }
 
     if (onReject) onReject(allRejected);
@@ -179,7 +182,7 @@ const CookieBanner = ({
       window.location.reload();
     }, 500);
   };
-
+  
   const handleCloseBanner = () => {
     if (bannerRef.current) {
       setIsClosing(true); 
@@ -193,7 +196,6 @@ const CookieBanner = ({
 
   const getText = (key, subKey = null) => {
     if (subKey) {
-      // Gestione delle chiavi annidate (per cookieTypes)
       const configValue = config.cookieTypes?.[key]?.[subKey];
       const defaultConfigValue = defaultConfig.cookieTypes?.[key]?.[subKey];
       const translationValue = t.cookieTypes?.[key]?.[subKey];
@@ -204,13 +206,13 @@ const CookieBanner = ({
       }
       return translationValue || fallbackValue || configValue || defaultConfigValue || '';
     } else {
-      // Gestione delle chiavi di primo livello (come prima)
       if (config[key] && config[key] !== defaultConfig[key] && config[key].trim() !== '') {
         return config[key];
       }
       return t[key] || translations['en'][key] || config[key] || defaultConfig[key] || '';
     }
   };
+
   if (!Object.keys(config.cookieTypes).length) return null;
 
   return (
@@ -240,7 +242,7 @@ const CookieBanner = ({
           </p>
         )}
 
-<div className="cookie-buttons">
+        <div className="cookie-buttons">
           <button 
             onClick={handleAcceptAll}
             className="cookie-button accept-button"
@@ -261,14 +263,14 @@ const CookieBanner = ({
           onClick={toggleDetails}
           className="details-link"
         >
-          {showDetails ? config.hideDetailsLinkText : config.detailsLinkText}
+          {showDetails ? getText('hideDetailsLinkText') : getText('detailsLinkText')}
         </button>
 
         <div ref={detailsRef}>
           {showDetails && (
             <div className="cookie-options" data-testid="cookie-options">
-            {config.cookieTypes && Object.entries(config.cookieTypes).map(([type, value]) => (
-                  <div key={type} className="cookie-option">
+              {config.cookieTypes && Object.entries(config.cookieTypes).map(([type, value]) => (
+                <div key={type} className="cookie-option">
                   <input
                     type="checkbox"
                     id={type}
@@ -288,12 +290,12 @@ const CookieBanner = ({
                     )}
                   </div>
                 </div>
-                ))}
+              ))}
               <button
                 onClick={handleSavePreferences}
                 className="cookie-button save-button"
               >
-                {config.saveButtonText}
+                {getText('saveButtonText')}
               </button>
             </div>
           )}
