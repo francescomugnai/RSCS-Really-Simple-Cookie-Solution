@@ -1,6 +1,6 @@
 {
   "name": "@mugnai/rscs",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "RSCS - Really Simple Cookie Solution: A lightweight, customizable cookie consent management solution.",
   "author": "Francesco Mugnai",
   "license": "MIT",
@@ -35,7 +35,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && terser dist/cookie-banner-widget.umd.js -o dist/cookie-banner-widget.umd.min.js",
-    "publish-package": "npm run build && git add . && git commit -m \"Build for publishing\" && npm version patch && npm publish && git push && git push --tags",
+    "publish-package": "npm run build && npm publish",
     "preview": "vite preview",
     "test": "vitest"
   },
