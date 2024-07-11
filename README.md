@@ -123,26 +123,27 @@ CookieBannerWidget.init({
 
 | Option                   | Type    | Default                  | Description                                                  |
 |--------------------------|---------|--------------------------|--------------------------------------------------------------|
-| acceptAllButtonText      | string  | 'Accept All'             | Text for the accept all button in the banner                  |
-| autoBlock                | boolean | true                     | Automatically block known tracking domains                    |
-| bannerDescription        | string  | 'We use cookies to enhance your experience on our site.' | Description text of the cookie banner                         |
+| acceptAllButtonText      | string  | 'Accept All'             | Text for the accept all button in the banner                 |
+| autoBlock                | boolean | true                     | Automatically block known tracking domains                   |
+| bannerDescription        | string  | 'We use cookies to enhance your experience on our site.' | Description text of the cookie banner |
 | bannerTitle              | string  | 'Cookie Settings'        | Title of the cookie banner                                   |
 | blockedDomains           | array   | null                     | Custom list of domains to block                              |
-| closeButtonText          | string  | 'Close'                  | Text for the close button in the banner                       |
+| closeButtonText          | string  | 'Close'                  | Text for the close button in the banner                      |
 | colorMode                | string  | 'auto'                   | Color mode for the banner. Can be 'light', 'dark', or 'auto' |
-| cookieTypes              | object  | See default below        | Define custom cookie categories and their descriptions        |
+| cookieTypes              | object  | See default below        | Define custom cookie categories and their descriptions       |
+| desktopWidth             | string  | '380px'                  | Width of the banner on desktop devices                       |
 | googleAnalytics          | object  | { enabled: false, id: '', category: 'marketing' } | Configuration for Google Analytics integration |
 | initiallyExpanded        | boolean | false                    | If true, the banner will be initially expanded with details visible |
 | language                 | string  | 'en'                     | Language for the banner text. Supports multi-language configuration. |
-| logoDarkUrl              | string  | null                     | URL for the logo to display in dark mode                      |
-| logoUrl                  | string  | null                     | URL for the logo to display in the banner                     |
-| preferencesButtonId      | string  | 'cookie-preferences-button' | ID of the preferences button                                 |
+| logoDarkUrl              | string  | null                     | URL for the logo to display in dark mode                     |
+| logoUrl                  | string  | null                     | URL for the logo to display in the banner                    |
+| preferencesButtonId      | string  | 'cookie-preferences-button' | ID of the preferences button                              |
 | saveButtonText           | string  | 'Save Preferences'       | Text for the save button in the banner                       |
 | scrollTopButton          | string  | 'Back to Top'            | Text for the scroll-to-top button                            |
 | useAnimations            | boolean | true                     | Whether to use animations in the banner                      |
 | useDefaultBlockedDomains | boolean | true                     | Whether to use the default list of blocked domains           |
-| position                 | string  | 'bottom-right'           | Position of the banner. Can be 'bottom-right', 'bottom-left', or 'bottom-center'           |
-| preferencesButtonColor   | string  | '#4299e1'                | Color of the preferences button                             |
+| position                 | string  | 'bottom-right'           | Position of the banner. Can be 'bottom-right', 'bottom-left', or 'bottom-center' |
+| preferencesButtonColor   | string  | '#4299e1'                | Color of the preferences button                              |
 | showPreferencesButton    | boolean | true                     | If false, the preferences button will not be shown           |
 
 
@@ -152,6 +153,18 @@ If you want to provide a custom button to reopen the cookie preferences, you can
 
 ```html
 <button id="cookie-preferences-button">Manage Cookie Preferences</button>
+```
+
+#### Customizing Banner Width on Desktop 📏
+
+You can customize the width of the cookie banner on desktop devices using the `desktopWidth` option. This allows you to better integrate the banner with your website's design on larger screens. For example:
+
+```js
+CookieBannerWidget.init({
+  language: 'en',
+  desktopWidth: '500px',
+  // ... other options ...
+});
 ```
 
 #### Language and Translations 🌐

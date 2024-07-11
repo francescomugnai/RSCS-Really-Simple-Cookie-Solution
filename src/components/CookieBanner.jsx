@@ -64,6 +64,13 @@ const CookieBanner = ({
     }
   }, []);
 
+  useEffect(() => {
+    const banner = document.querySelector('[data-cookie-banner-widget] .cookie-banner');
+    if (banner) {
+      banner.style.setProperty('--desktop-width', config.desktopWidth);
+    }
+  }, [config.desktopWidth]);
+
   const toggleDetails = () => {
     setTimeout(() => {
       setShowDetails(prev => !prev);

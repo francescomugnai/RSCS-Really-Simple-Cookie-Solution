@@ -63,12 +63,17 @@
   }
 }
 
+@media (min-width: 768px) {
+  [data-cookie-banner-widget] .cookie-banner {
+    width: var(--desktop-width, 380px);
+    max-width: calc(100vw - 40px);
+  }
+}
+
 [data-cookie-banner-widget] .cookie-banner {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 380px;
-  max-width: calc(100vw - 40px);
   background-color: var(--color-background);
   color: var(--color-text);
   padding: 24px;

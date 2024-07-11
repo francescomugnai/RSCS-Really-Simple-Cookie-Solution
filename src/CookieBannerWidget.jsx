@@ -35,6 +35,7 @@ const CookieBannerWidget = {
       bannerTitle: 'Cookie Settings',
       bannerDescription: 'We use cookies to enhance your browsing experience, personalize content and ads, analyze our traffic, and provide social media features. By clicking "Accept All", you consent to our use of cookies. You can manage your preferences by clicking "Manage Cookies".',
       colorMode: 'auto', 
+      desktopWidth: '380px',
       saveButtonText: 'Save Preferences',
       acceptAllButtonText: 'Accept All',
       closeButtonText: 'Close',
