@@ -222,9 +222,11 @@ const CookieBanner = ({
       data-testid="cookie-banner"
     >
       <div className="cookie-banner-content">
-        <button onClick={handleCloseBanner} className="close-button">
-          {getText('closeButtonText')}
-        </button>
+        {config.closeButton && (
+          <button onClick={handleCloseBanner} className="close-button">
+            {getText('closeButtonText')}
+          </button>
+        )}
         
         {(config.logoUrl || config.logoDarkUrl) && (
           <div className="logo-container">

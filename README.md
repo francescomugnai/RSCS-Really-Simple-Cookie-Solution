@@ -128,6 +128,7 @@ CookieBannerWidget.init({
 | bannerDescription        | string  | 'We use cookies to enhance your experience on our site.' | Description text of the cookie banner |
 | bannerTitle              | string  | 'Cookie Settings'        | Title of the cookie banner                                   |
 | blockedDomains           | array   | null                     | Custom list of domains to block                              |
+| closeButton              | boolean | true                     | If false, the close button will not be shown                 |
 | closeButtonText          | string  | 'Close'                  | Text for the close button in the banner                      |
 | colorMode                | string  | 'auto'                   | Color mode for the banner. Can be 'light', 'dark', or 'auto' |
 | cookieTypes              | object  | See default below        | Define custom cookie categories and their descriptions       |
