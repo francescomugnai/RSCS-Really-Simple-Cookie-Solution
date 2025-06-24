@@ -1,11 +1,5 @@
 # RSCS - Really Simple Cookie Solution 🍪
 
-THIS IS FORK OF: (https://github.com/francescomugnai/RSCS-Really-Simple-Cookie-Solution)
-#### Changes
-- CSS styles: removed the import font declaration to prevent loading external fonts, to make it more compliant with GDPR, especially for Germany
-- Config: added a new attribute "closeButton" (boolean, default: true) to have control whether to display the close button or not
-
-
 RSCS is a lightweight, easy-to-use cookie consent management solution for your web projects. 
 It's designed to be flexible, customizable, and compliant with GDPR and other cookie regulations.
 
@@ -134,7 +128,7 @@ CookieBannerWidget.init({
 | bannerDescription        | string  | 'We use cookies to enhance your experience on our site.' | Description text of the cookie banner |
 | bannerTitle              | string  | 'Cookie Settings'        | Title of the cookie banner                                   |
 | blockedDomains           | array   | null                     | Custom list of domains to block                              |
-| closeButton              | boolean | true                     | Whether to display the close button or not                   |
+| closeButton              | boolean | true                     | If false, the close button will not be shown                 |
 | closeButtonText          | string  | 'Close'                  | Text for the close button in the banner                      |
 | colorMode                | string  | 'auto'                   | Color mode for the banner. Can be 'light', 'dark', or 'auto' |
 | cookieTypes              | object  | See default below        | Define custom cookie categories and their descriptions       |
